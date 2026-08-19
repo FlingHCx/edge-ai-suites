@@ -15,3 +15,24 @@ datasources:
       tlsSkipVerify: false
       withCredentials: true
     uid: xU6Z19aVk
+
+  - name: Infinity
+    type: yesoreyeram-infinity-datasource
+    access: proxy
+    jsonData:
+
+  - name: grafana-mqtt-datasource
+    type: grafana-mqtt-datasource
+    access: proxy
+    isDefault: true
+    readOnly: false
+    editable: true
+    jsonData: { "uri": "tcp://broker:1883" }
+
+  - name: Prometheus
+    type: prometheus
+    url: https://nginx-reverse-proxy/prometheus
+    access: proxy
+    isDefault: false
+    jsonData:
+      tlsSkipVerify: true  # This disables certificate verification

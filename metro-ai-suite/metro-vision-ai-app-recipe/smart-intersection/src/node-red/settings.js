@@ -41,7 +41,7 @@ module.exports = {
      * node-red from being able to decrypt your existing credentials and they will be
      * lost.
      */
-    credentialSecret: false,
+    //credentialSecret: "a-secret-key",
 
     /** By default, the flow JSON will be formatted over multiple lines making
      * it easier to compare changes when using version control.
@@ -273,6 +273,7 @@ module.exports = {
  * Runtime Settings
  *  - lang
  *  - runtimeState
+ *  - telemetry
  *  - diagnostics
  *  - logging
  *  - contextStorage
@@ -310,6 +311,22 @@ module.exports = {
         enabled: false,
         /** show or hide runtime stop/start options in the node-red editor. Must be set to `false` to hide */
         ui: false,
+    },
+    telemetry: {
+        /**
+         * By default, telemetry is disabled until the user provides consent the first
+         * time they open the editor.
+         *
+         * The following property can be uncommented and set to true/false to enable/disable
+         * telemetry without seeking further consent in the editor.
+         * The user can override this setting via the user settings dialog within the editor
+         */
+        // enabled: true,
+        /**
+         * If telemetry is enabled, the editor will notify the user if a new version of Node-RED
+         * is available. Set the following property to false to disable this notification.
+         */
+        // updateNotification: true
     },
     /** Configure the logging output */
     logging: {
@@ -415,7 +432,9 @@ module.exports = {
              * added to the end of the palette.
              * If not set, the following default order is used:
              */
-            //categories: ['subflows', 'common', 'function', 'network', 'sequence', 'parser', 'storage'],
+            //categories: {
+            //     order: ['subflows', 'common', 'function', 'network', 'sequence', 'parser', 'storage'],
+            // },
         },
 
         projects: {
@@ -473,6 +492,7 @@ module.exports = {
  *  - fileWorkingDirectory
  *  - functionGlobalContext
  *  - functionExternalModules
+ *  - globalFunctionTimeout
  *  - functionTimeout
  *  - nodeMessageBufferMaxLength
  *  - ui (for use with Node-RED Dashboard)
@@ -499,7 +519,19 @@ module.exports = {
     /** Allow the Function node to load additional npm modules directly */
     functionExternalModules: true,
 
-    /** Default timeout, in seconds, for the Function node. 0 means no timeout is applied */
+
+    /**
+     * The default timeout (in seconds) for all Function nodes.
+     * Individual nodes can set their own timeout value within their configuration.
+     */
+    globalFunctionTimeout: 0,
+
+    /**
+      * Default timeout, in seconds, for the Function node. 0 means no timeout is applied
+      * This value is applied when the node is first added to the workspace - any changes
+      * must then be made with the individual node configurations.
+      * To set a global timeout value, use `globalFunctionTimeout`
+     */
     functionTimeout: 0,
 
     /** The following property can be used to set predefined values in Global Context.
@@ -590,4 +622,23 @@ module.exports = {
     //    *   - reason: if result is false, the HTTP reason string to return
     //    */
     //},
+
+/*******************************************************************************
+ * Node Default Overrides
+ * 
+ * This allows the user to override default values of a node. These are the values
+ * that are applied when a node is added to the workspace. They do not affect
+ * nodes that have already been deployed.
+ * 
+ * The available properties of a node type can be found in the Information sidebar when
+ * selecting a node of that type.
+ * 
+ * 
+ *******************************************************************************/
+
+    // nodeDefaults: {
+    //     "debug": {
+    //         "complete": true // set the debug node to show complete msg by default
+    //     }
+    // }
 }
