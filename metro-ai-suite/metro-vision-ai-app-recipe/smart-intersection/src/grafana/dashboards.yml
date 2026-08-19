@@ -5,7 +5,6 @@ providers:
   - name: 'Pipeline Server Dashboard Provider'
     # <int> Org id. Default to 1
     orgId: 1
-    folder: ''
     # <string> provider type. Default to 'file'
     type: file
     # <bool> disable dashboard deletion
