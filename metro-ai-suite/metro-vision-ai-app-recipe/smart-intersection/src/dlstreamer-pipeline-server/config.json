@@ -5,7 +5,7 @@
         "name": "parkingcam1_gpu",
         "source": "gstreamer",
         "auto_start": true,
-        "pipeline": "rtspsrc location=rtsp://mediaserver:8554/ParkingVideo-cam1 latency=200 ! decodebin3 ! vapostproc ! video/x-raw(memory:VAMemory) ! gvafpsthrottle target-fps=30 ! gvapython class=PostDecodeTimestampCapture function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=timesync ! gvadetect device=GPU model-instance-id=detect1 threshold=0.3 inference-interval=1 model=/home/pipeline-server/models/public/yolo11s/FP32/yolo11s.xml pre-process-backend=va-surface-sharing ! queue ! gvaclassify batch-size=1 model=/home/pipeline-server/models/colorcls2/colorcls2.xml model-proc=/home/pipeline-server/models/colorcls2/colorcls2.json device=GPU inference-interval=1 model-instance-id=class1 ! queue ! gvametaconvert add-tensor-data=true name=metaconvert ! vapostproc ! video/x-raw,format=BGRA ! videoconvert ! video/x-raw,format=BGR ! gvapython class=PostInferenceDataPublish function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=datapublisher ! gvametapublish name=destination ! appsink sync=true",
+        "pipeline": "rtspsrc location=rtsp://mediaserver:8554/ParkingVideo-cam1 latency=200 ! decodebin3 ! vapostproc ! video/x-raw(memory:VAMemory) ! gvafpsthrottle target-fps=30 ! gvapython class=PostDecodeTimestampCapture function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=timesync ! gvadetect device=GPU model-instance-id=detect1 threshold=0.3 inference-interval=1 model=/home/pipeline-server/models/public/yolo11s/FP32/yolo11s.xml pre-process-backend=va-surface-sharing ! queue ! gvaclassify batch-size=1 model=/home/pipeline-server/models/colorcls2/colorcls2.xml model-proc=/home/pipeline-server/models/colorcls2/colorcls2.json device=NPU inference-interval=1 model-instance-id=class1 ! queue ! gvametaconvert add-tensor-data=true name=metaconvert ! vapostproc ! video/x-raw,format=BGRA ! videoconvert ! video/x-raw,format=BGR ! gvapython class=PostInferenceDataPublish function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=datapublisher ! gvametapublish name=destination ! appsink sync=true",
         "parameters": {
           "type": "object",
           "properties": {
@@ -45,28 +45,24 @@
                 "intrinsics": {
                   "type": "array",
                   "items": {
-                    "type": "number",
-                    "description": "Camera intrinsics as [diagonal_fov] or [horizontal_fov, vertical_fov] or [fx,fy,cx,cy] "
+                    "type": "number"
                   }
                 },
                 "cameraid": {
                   "type": "string"
                 },
                 "metadatagenpolicy": {
-                  "type": "string",
-                  "description": "Meta data generation policy, one of detectionPolicy(default),reidPolicy,classificationPolicy"
+                  "type": "string"
                 },
                 "publish_frame": {
-                  "type": "boolean",
-                  "description": "Publish frame to mqtt"
+                  "type": "boolean"
                 },
 
                 "detection_labels": {
                   "type": "array",
                   "items": {
                     "type": "string"
-                  },
-                  "description": "List of detection labels to filter (e.g., [\"person\", \"car\"]). If empty, all labels are published."
+                  }
                 }
               }
             }
@@ -89,11 +85,12 @@
             }
           }
         }
-      },{
+      },      
+      {
         "name": "parkingcam2_gpu",
         "source": "gstreamer",
         "auto_start": true,
-        "pipeline": "rtspsrc location=rtsp://mediaserver:8554/ParkingVideo-cam2  latency=200 ! decodebin3 ! vapostproc ! video/x-raw(memory:VAMemory) ! gvafpsthrottle target-fps=30 ! gvapython class=PostDecodeTimestampCapture function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=timesync ! gvadetect device=GPU model-instance-id=detect1 threshold=0.3 inference-interval=1 model=/home/pipeline-server/models/public/yolo11s/FP32/yolo11s.xml pre-process-backend=va-surface-sharing ! queue ! gvaclassify batch-size=1 model=/home/pipeline-server/models/colorcls2/colorcls2.xml model-proc=/home/pipeline-server/models/colorcls2/colorcls2.json device=GPU inference-interval=1 model-instance-id=class1 ! queue ! gvametaconvert add-tensor-data=true name=metaconvert ! vapostproc ! video/x-raw,format=BGRA ! videoconvert ! video/x-raw,format=BGR ! gvapython class=PostInferenceDataPublish function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=datapublisher ! gvametapublish name=destination ! appsink sync=true",
+        "pipeline": "rtspsrc location=rtsp://mediaserver:8554/ParkingVideo-cam2 latency=200 ! decodebin3 ! vapostproc ! video/x-raw(memory:VAMemory) ! gvafpsthrottle target-fps=30 ! gvapython class=PostDecodeTimestampCapture function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=timesync ! gvadetect device=GPU model-instance-id=detect1 threshold=0.3 inference-interval=1 model=/home/pipeline-server/models/public/yolo11s/FP32/yolo11s.xml pre-process-backend=va-surface-sharing ! queue ! gvaclassify batch-size=1 model=/home/pipeline-server/models/colorcls2/colorcls2.xml model-proc=/home/pipeline-server/models/colorcls2/colorcls2.json device=NPU inference-interval=1 model-instance-id=class1 ! queue ! gvametaconvert add-tensor-data=true name=metaconvert ! vapostproc ! video/x-raw,format=BGRA ! videoconvert ! video/x-raw,format=BGR ! gvapython class=PostInferenceDataPublish function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=datapublisher ! gvametapublish name=destination ! appsink sync=true",
         "parameters": {
           "type": "object",
           "properties": {
@@ -133,28 +130,24 @@
                 "intrinsics": {
                   "type": "array",
                   "items": {
-                    "type": "number",
-                    "description": "Camera intrinsics as [diagonal_fov] or [horizontal_fov, vertical_fov] or [fx,fy,cx,cy] "
+                    "type": "number"
                   }
                 },
                 "cameraid": {
                   "type": "string"
                 },
                 "metadatagenpolicy": {
-                  "type": "string",
-                  "description": "Meta data generation policy, one of detectionPolicy(default),reidPolicy,classificationPolicy"
+                  "type": "string"
                 },
                 "publish_frame": {
-                  "type": "boolean",
-                  "description": "Publish frame to mqtt"
+                  "type": "boolean"
                 },
 
                 "detection_labels": {
                   "type": "array",
                   "items": {
                     "type": "string"
-                  },
-                  "description": "List of detection labels to filter (e.g., [\"person\", \"car\"]). If empty, all labels are published."
+                  }
                 }
               }
             }
@@ -177,11 +170,12 @@
             }
           }
         }
-      },{
+      },      
+      {
         "name": "parkingcam3_gpu",
         "source": "gstreamer",
         "auto_start": true,
-        "pipeline": "rtspsrc location=rtsp://mediaserver:8554/ParkingVideo-cam3 latency=200 ! decodebin3 ! vapostproc ! video/x-raw(memory:VAMemory) ! gvafpsthrottle target-fps=30 ! gvapython class=PostDecodeTimestampCapture function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=timesync ! gvadetect device=GPU model-instance-id=detect1 threshold=0.3 inference-interval=1 model=/home/pipeline-server/models/public/yolo11s/FP32/yolo11s.xml pre-process-backend=va-surface-sharing ! queue ! gvaclassify batch-size=1 model=/home/pipeline-server/models/colorcls2/colorcls2.xml model-proc=/home/pipeline-server/models/colorcls2/colorcls2.json device=GPU inference-interval=1 model-instance-id=class1 ! queue ! gvametaconvert add-tensor-data=true name=metaconvert ! vapostproc ! video/x-raw,format=BGRA ! videoconvert ! video/x-raw,format=BGR ! gvapython class=PostInferenceDataPublish function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=datapublisher ! gvametapublish name=destination ! appsink sync=true",
+        "pipeline": "rtspsrc location=rtsp://mediaserver:8554/ParkingVideo-cam3 latency=200 ! decodebin3 ! vapostproc ! video/x-raw(memory:VAMemory) ! gvafpsthrottle target-fps=30 ! gvapython class=PostDecodeTimestampCapture function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=timesync ! gvadetect device=GPU model-instance-id=detect1 threshold=0.3 inference-interval=1 model=/home/pipeline-server/models/public/yolo11s/FP32/yolo11s.xml pre-process-backend=va-surface-sharing ! queue ! gvaclassify batch-size=1 model=/home/pipeline-server/models/colorcls2/colorcls2.xml model-proc=/home/pipeline-server/models/colorcls2/colorcls2.json device=NPU inference-interval=1 model-instance-id=class1 ! queue ! gvametaconvert add-tensor-data=true name=metaconvert ! vapostproc ! video/x-raw,format=BGRA ! videoconvert ! video/x-raw,format=BGR ! gvapython class=PostInferenceDataPublish function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=datapublisher ! gvametapublish name=destination ! appsink sync=true",
         "parameters": {
           "type": "object",
           "properties": {
@@ -221,28 +215,24 @@
                 "intrinsics": {
                   "type": "array",
                   "items": {
-                    "type": "number",
-                    "description": "Camera intrinsics as [diagonal_fov] or [horizontal_fov, vertical_fov] or [fx,fy,cx,cy] "
+                    "type": "number"
                   }
                 },
                 "cameraid": {
                   "type": "string"
                 },
                 "metadatagenpolicy": {
-                  "type": "string",
-                  "description": "Meta data generation policy, one of detectionPolicy(default),reidPolicy,classificationPolicy"
+                  "type": "string"
                 },
                 "publish_frame": {
-                  "type": "boolean",
-                  "description": "Publish frame to mqtt"
+                  "type": "boolean"
                 },
 
                 "detection_labels": {
                   "type": "array",
                   "items": {
                     "type": "string"
-                  },
-                  "description": "List of detection labels to filter (e.g., [\"person\", \"car\"]). If empty, all labels are published."
+                  }
                 }
               }
             }
@@ -265,11 +255,11 @@
             }
           }
         }
-      },{
+      },      {
         "name": "parkingcam4_gpu",
         "source": "gstreamer",
         "auto_start": true,
-        "pipeline": "rtspsrc location=rtsp://mediaserver:8554/ParkingVideo-cam4 latency=200 ! decodebin3 ! vapostproc ! video/x-raw(memory:VAMemory) ! gvafpsthrottle target-fps=30 ! gvapython class=PostDecodeTimestampCapture function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=timesync ! gvadetect device=GPU model-instance-id=detect1 threshold=0.3 inference-interval=1 model=/home/pipeline-server/models/public/yolo11s/FP32/yolo11s.xml pre-process-backend=va-surface-sharing ! queue ! gvaclassify batch-size=1 model=/home/pipeline-server/models/colorcls2/colorcls2.xml model-proc=/home/pipeline-server/models/colorcls2/colorcls2.json device=GPU inference-interval=1 model-instance-id=class1 ! queue ! gvametaconvert add-tensor-data=true name=metaconvert ! vapostproc ! video/x-raw,format=BGRA ! videoconvert ! video/x-raw,format=BGR ! gvapython class=PostInferenceDataPublish function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=datapublisher ! gvametapublish name=destination ! appsink sync=true",
+        "pipeline": "rtspsrc location=rtsp://mediaserver:8554/ParkingVideo-cam4 latency=200 ! decodebin3 ! vapostproc ! video/x-raw(memory:VAMemory) ! gvafpsthrottle target-fps=30 ! gvapython class=PostDecodeTimestampCapture function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=timesync ! gvadetect device=GPU model-instance-id=detect1 threshold=0.3 inference-interval=1 model=/home/pipeline-server/models/public/yolo11s/FP32/yolo11s.xml pre-process-backend=va-surface-sharing ! queue ! gvaclassify batch-size=1 model=/home/pipeline-server/models/colorcls2/colorcls2.xml model-proc=/home/pipeline-server/models/colorcls2/colorcls2.json device=NPU inference-interval=1 model-instance-id=class1 ! queue ! gvametaconvert add-tensor-data=true name=metaconvert ! vapostproc ! video/x-raw,format=BGRA ! videoconvert ! video/x-raw,format=BGR ! gvapython class=PostInferenceDataPublish function=processFrame module=/home/pipeline-server/user_scripts/gvapython/sscape/sscape_adapter.py name=datapublisher ! gvametapublish name=destination ! appsink sync=true",
         "parameters": {
           "type": "object",
           "properties": {
@@ -309,28 +299,24 @@
                 "intrinsics": {
                   "type": "array",
                   "items": {
-                    "type": "number",
-                    "description": "Camera intrinsics as [diagonal_fov] or [horizontal_fov, vertical_fov] or [fx,fy,cx,cy] "
+                    "type": "number"
                   }
                 },
                 "cameraid": {
                   "type": "string"
                 },
                 "metadatagenpolicy": {
-                  "type": "string",
-                  "description": "Meta data generation policy, one of detectionPolicy(default),reidPolicy,classificationPolicy"
+                  "type": "string"
                 },
                 "publish_frame": {
-                  "type": "boolean",
-                  "description": "Publish frame to mqtt"
+                  "type": "boolean"
                 },
 
                 "detection_labels": {
                   "type": "array",
                   "items": {
                     "type": "string"
-                  },
-                  "description": "List of detection labels to filter (e.g., [\"person\", \"car\"]). If empty, all labels are published."
+                  }
                 }
               }
             }

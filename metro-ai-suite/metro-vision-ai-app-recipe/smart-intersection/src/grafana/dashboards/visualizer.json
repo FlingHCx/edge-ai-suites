@@ -18,109 +18,9 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 2,
   "links": [],
   "panels": [
-    {
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 15,
-        "w": 11,
-        "x": 0,
-        "y": 0
-      },
-      "id": 1,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "<iframe \n  src= \"${WEBRTC_URL}object_detection_1/\" \n  style=\"width:100%;height:500px\";\n  allow=\"autoplay; encrypted-media\"\n  >\n</iframe> ",
-        "mode": "html"
-      },
-      "pluginVersion": "11.5.4",
-      "title": "Zone 1",
-      "type": "text"
-    },
-    {
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 15,
-        "w": 11,
-        "x": 11,
-        "y": 0
-      },
-      "id": 2,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "<iframe \n  src= \"${WEBRTC_URL}object_detection_2/\" \n  style=\"width:100%;height:500px\";\n  allow=\"autoplay; encrypted-media\"\n  >\n</iframe> ",
-        "mode": "html"
-      },
-      "pluginVersion": "11.5.4",
-      "title": "Zone 2",
-      "type": "text"
-    },
-    {
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 15,
-        "w": 11,
-        "x": 0,
-        "y": 15
-      },
-      "id": 3,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "<iframe \n  src= \"${WEBRTC_URL}object_detection_3/\" \n  style=\"width:100%;height:500px\";\n  allow=\"autoplay; encrypted-media\"\n  >\n</iframe> ",
-        "mode": "html"
-      },
-      "pluginVersion": "11.5.4",
-      "title": "Zone 3",
-      "type": "text"
-    },
-    {
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 15,
-        "w": 11,
-        "x": 11,
-        "y": 15
-      },
-      "id": 4,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "<iframe \n  src= \"${WEBRTC_URL}object_detection_4/\" \n  style=\"width:100%;height:500px\";\n  allow=\"autoplay; encrypted-media\"\n  >\n</iframe> ",
-        "mode": "html"
-      },
-      "pluginVersion": "11.5.4",
-      "title": "Zone 4",
-      "type": "text"
-    },
     {
       "datasource": {
         "type": "grafana-mqtt-datasource",
@@ -144,8 +44,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -160,7 +59,7 @@
         "h": 20,
         "w": 22,
         "x": 0,
-        "y": 30
+        "y": 0
       },
       "id": 5,
       "options": {
@@ -175,7 +74,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "11.5.4",
+      "pluginVersion": "11.6.0",
       "targets": [
         {
           "datasource": {
@@ -191,11 +90,11 @@
         {
           "id": "reduce",
           "options": {
+            "includeTimeField": false,
+            "mode": "reduceFields",
             "reducers": [
               "lastNotNull"
-            ],
-            "mode": "reduceFields",
-            "includeTimeField": false
+            ]
           }
         },
         {
@@ -246,27 +145,10 @@
   ],
   "preload": false,
   "refresh": "",
-  "schemaVersion": 40,
+  "schemaVersion": 41,
   "tags": [],
   "templating": {
-    "list": [
-      {
-        "current": {
-          "text": "https://10.107.228.76/mediamtx/",
-          "value": "https://10.107.228.76/mediamtx/"
-        },
-        "name": "WEBRTC_URL",
-        "options": [
-          {
-            "selected": true,
-            "text": "https://10.107.228.76/mediamtx/",
-            "value": "https://10.107.228.76/mediamtx/"
-          }
-        ],
-        "query": "https://10.107.228.76/mediamtx/",
-        "type": "textbox"
-      }
-    ]
+    "list": []
   },
   "time": {
     "from": "now-1s",
@@ -276,6 +158,5 @@
   "timezone": "browser",
   "title": "Smart Parking Dashboard",
   "uid": "eeokpst3k6xogd",
-  "version": 1,
-  "weekStart": ""
+  "version": 1
 }

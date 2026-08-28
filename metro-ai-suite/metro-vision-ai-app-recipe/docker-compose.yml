@@ -93,7 +93,7 @@ services:
       DOCKER_INFLUXDB_INIT_PASSWORD_FILE: /run/secrets/influxdb2-admin-password
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN_FILE: /run/secrets/influxdb2-admin-token
       DOCKER_INFLUXDB_INIT_ORG: ITM
-      DOCKER_INFLUXDB_INIT_BUCKET: smartparking
+      DOCKER_INFLUXDB_INIT_BUCKET: ssmartparking
       DOCKER_INFLUXDB_INIT_RETENTION: 1w
       http_proxy: ${http_proxy}
       https_proxy: ${https_proxy}
@@ -125,8 +125,8 @@ services:
       - "."  
     volumes:
       # - ./${SAMPLE_APP}/src/grafana/data/dashboards/anthem-intersection.json:/tmp/anthem-intersection.json
-      - ./${SAMPLE_APP}/src/grafana/data/dashboards/visualizer.json:/tmp/visualizer.json
-      - ./${SAMPLE_APP}/src/grafana/data/dashboards/prometheus.json:/tmp/prometheus.json
+      - ./${SAMPLE_APP}/src/grafana/dashboards/visualizer.json:/tmp/visualizer.json
+      - ./${SAMPLE_APP}/src/grafana/dashboards/prometheus.json:/tmp/prometheus.json
       - ./${SAMPLE_APP}/src/grafana/dashboards.yml:/tmp/dashboards.yml
       - ./${SAMPLE_APP}/src/grafana/datasources.yml:/tmp/datasources.yml
       - grafana-storage:/var/lib/grafana
@@ -174,12 +174,7 @@ services:
           - mediamtx-server 
     ports:
       - "8554:8554"   # RTSP
-      - "8889:8889"   # WebRTC HTTP
-      - "8890:8890/udp"  # WebRTC ICE UDP
-      - "1935:1935"   # RTMP (optional)
-      - "9997:9997"  
-    volumes:
-      - ./mediamtx.yml:/mediamtx.yml 
+      - "9997:9997"   
     restart: always
     pids_limit: 1000
 
@@ -332,15 +327,6 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
-
-  coturn:
-    image: coturn/coturn:4.12.0
-    container_name: coturn
-    command: ["-v", "--external-ip=$HOST_IP", "--user=${MTX_WEBRTCICESERVERS2_0_USERNAME}:${MTX_WEBRTCICESERVERS2_0_PASSWORD}", "--realm=turn.local", "--no-tls", "--no-dtls", "--lt-cred-mech"]
-    ports:
-      - "3478:3478/udp"
-    networks:
-      - scenescape
 
   web:
     image: intel/scenescape-manager:2026.1.0
