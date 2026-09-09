@@ -137,11 +137,17 @@ services:
       HTTP_PROXY: ${http_proxy}
       HTTPS_PROXY: ${https_proxy}
       NO_PROXY: ${no_proxy},.scenescape.intel.com,influxdb2,prometheus,172.18.0.0/16,nginx-reverse-proxy,nginx
-      GF_SERVER_ROOT_URL: https://localhost/grafana/
+      GF_SERVER_ROOT_URL: https://${HOST_IP}/grafana/
+      GF_LIVE_ALLOWED_ORIGINS: "*"
       GF_INSTALL_PLUGINS: "yesoreyeram-infinity-datasource,grafana-mqtt-datasource"
       GF_SERVER_SERVE_FROM_SUB_PATH: true
       GF_PANELS_DISABLE_SANITIZE_HTML: true
       GF_SECURITY_ALLOW_EMBEDDING: true
+      GF_AUTH_ANONYMOUS_ENABLED: true
+      GF_AUTH_ANONYMOUS_ORG_NAME: Main Org.
+      GF_SECURITY_COOKIE_SECURE: true
+      GF_SECURITY_COOKIE_SAMESITE: lax
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
     restart: on-failure:5
     networks:
       - scenescape
@@ -164,6 +170,7 @@ services:
         sed -i \"s/<influx-api-token>/$(cat /run/secrets/influxdb2-admin-token)/g\" /etc/grafana/provisioning/datasources/datasources.yml && \
         /run.sh",
       ]
+
 
   mediaserver:
     image: bluenviron/mediamtx:1.18.1
@@ -302,9 +309,9 @@ services:
     secrets:
       - source: root-cert
         target: certs/scenescape-ca.pem
-      - source: broker-cert          # ← add this
+      - source: broker-cert          # ? add this
         target: certs/scenescape-broker.crt
-      - source: broker-key           # ← add this
+      - source: broker-key           # ? add this
         target: certs/scenescape-broker.key
     restart: on-failure:5
 
@@ -459,7 +466,7 @@ services:
     dns_search:
       - "."
     ports:
-      - "9090:9090"        # ← ADD THIS
+      - "9090:9090"        # ? ADD THIS
     environment:
       - HTTP_PROXY=${http_proxy}
       - HTTPS_PROXY=${https_proxy}
@@ -479,10 +486,10 @@ services:
     image: otel/opentelemetry-collector-contrib:0.94.0
     container_name: otel-collector
     ports:
-      - "4317:4317"        # ← ADD THIS (gRPC)
-      - "4318:4318"        # ← ADD THIS (HTTP)
-      - "8888:8888"        # ← ADD THIS (otel metrics)
-      - "9464:9464"         # ← ADD THIS (prometheus exporter)
+      - "4317:4317"        # ? ADD THIS (gRPC)
+      - "4318:4318"        # ? ADD THIS (HTTP)
+      - "8888:8888"        # ? ADD THIS (otel metrics)
+      - "9464:9464"         # ? ADD THIS (prometheus exporter)
     environment:
       HTTP_PROXY: ${http_proxy}
       HTTPS_PROXY: ${https_proxy}
@@ -497,8 +504,8 @@ services:
     image: intel/metrics-manager:2026.1.0-20260508-weekly
     container_name: metrics-manager
     ports:
-      - "9091:9090"        # ← ADD THIS (use 9091 to avoid conflict with prometheus)
-      - "9273:9273"        # ← ADD THIS (telegraf prometheus)
+      - "9091:9090"        # ? ADD THIS (use 9091 to avoid conflict with prometheus)
+      - "9273:9273"        # ? ADD THIS (telegraf prometheus)
       - "8186:8186"    
     privileged: true
     volumes:

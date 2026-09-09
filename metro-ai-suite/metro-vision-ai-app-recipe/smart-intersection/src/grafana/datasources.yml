@@ -23,11 +23,15 @@ datasources:
 
   - name: grafana-mqtt-datasource
     type: grafana-mqtt-datasource
+    uid: PBA9FB8DAC51D59B8
+    orgId: 1
     access: proxy
     isDefault: true
     readOnly: false
     editable: true
-    jsonData: { "uri": "tcp://broker:1883" }
+    jsonData: 
+      uri: "ssl://broker:1883"
+      tlsSkipVerify: true
 
   - name: Prometheus
     type: prometheus
