@@ -39,7 +39,6 @@
             "inspect": false
           },
           "mappings": [],
-          "max": 57,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -53,7 +52,43 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Status"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "Occupied": {
+                        "color": "red",
+                        "index": 0,
+                        "text": "Occupied"
+                      },
+                      "Empty": {
+                        "color": "green",
+                        "index": 1,
+                        "text": "Empty"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "color-background"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 20,
@@ -98,63 +133,50 @@
           }
         },
         {
-          "id": "partitionByValues",
-          "options": {
-            "fields": [
-              "Region 1_1 1"
-            ],
-            "keepFields": true
-          }
-        },
-        {
-          "id": "joinByLabels",
-          "options": {
-            "value": "Region 1_1 1"
-          }
+          "id": "transpose",
+          "options": {}
         },
         {
           "id": "extractFields",
           "options": {
-            "delimiter": ",",
-            "source": "[object Object]"
-          }
-        },
-        {
-          "id": "filterFieldsByName",
-          "options": {
-            "include": {
-              "names": [
-                "Zone ID",
-                "Spot ID",
-                "Status",
-                "Type",
-                "Color",
-                "Entry Time",
-                "Dwell Time"
-              ]
-            }
+            "format": "auto",
+            "source": "Value"
           }
         },
         {
           "id": "organize",
-          "options": {}
+          "options": {
+            "excludeByName": {
+              "Value": true
+            },
+            "renameByName": {
+              "Field": "Spot Name"
+            }
+          }
         }
       ],
       "type": "table"
     }
   ],
   "preload": false,
-  "refresh": "",
+  "refresh": "1s",
   "schemaVersion": 41,
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-1s",
+    "from": "now-5m",
     "to": "now"
   },
-  "timepicker": {},
+  "timepicker": {
+    "refresh_intervals": [
+      "500ms",
+      "1s",
+      "2s",
+      "5s"
+    ]
+  },
   "timezone": "browser",
   "title": "Smart Parking Dashboard",
   "uid": "eeokpst3k6xogd",
