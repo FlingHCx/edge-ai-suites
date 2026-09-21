@@ -18,13 +18,13 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 3,
   "links": [],
   "panels": [
     {
       "datasource": {
-        "type": "grafana-mqtt-datasource",
-        "uid": "PBA9FB8DAC51D59B8"
+        "type": "influxdb",
+        "uid": "xU6Z19aVk"
       },
       "fieldConfig": {
         "defaults": {
@@ -32,7 +32,7 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": "center",
+            "align": "auto",
             "cellOptions": {
               "type": "auto"
             },
@@ -52,51 +52,15 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Status"
-            },
-            "properties": [
-              {
-                "id": "mappings",
-                "value": [
-                  {
-                    "options": {
-                      "Occupied": {
-                        "color": "red",
-                        "index": 0,
-                        "text": "Occupied"
-                      },
-                      "Empty": {
-                        "color": "green",
-                        "index": 1,
-                        "text": "Empty"
-                      }
-                    },
-                    "type": "value"
-                  }
-                ]
-              },
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "mode": "basic",
-                  "type": "color-background"
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
-        "h": 20,
-        "w": 22,
+        "h": 15,
+        "w": 24,
         "x": 0,
         "y": 0
       },
-      "id": 5,
+      "id": 6,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -113,53 +77,19 @@
       "targets": [
         {
           "datasource": {
-            "type": "grafana-mqtt-datasource",
-            "uid": "PBA9FB8DAC51D59B8"
+            "type": "influxdb",
+            "uid": "xU6Z19aVk"
           },
-          "refId": "A",
-          "topic": "object_detection_custom_total_1"
+          "query": "\nfrom(bucket: \"UseCase2\")\n  |> range(start: -15m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"parking_spots\")\n  // 1. Exclude the numeric field causing the collision\n  |> filter(fn: (r) => r[\"_field\"] != \"occupied\")\n  // 2. Cast all remaining field values to string as a safeguard\n  |> toString()\n  // 3. Take the most recent entry for each field\n  |> group(columns: [\"zone_id\", \"spot_id\", \"_field\"])\n  |> last()\n  // 4. Pivot fields into table columns\n  |> group(columns: [\"zone_id\", \"spot_id\"])\n  |> pivot(\n      rowKey: [\"zone_id\", \"spot_id\"],\n      columnKey: [\"_field\"],\n      valueColumn: \"_value\"\n  )\n  // 5. Merge all spots and sort\n  |> group()\n  |> sort(columns: [\"zone_id\", \"spot_id\"])\n  // 6. Select and order output columns\n  |> keep(columns: [\"zone_id\", \"spot_id\", \"status\", \"type\", \"color\", \"entry_time\", \"dwell_time\"])",
+          "refId": "A"
         }
       ],
-      "title": "Occupancy Status",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "includeTimeField": false,
-            "mode": "reduceFields",
-            "reducers": [
-              "lastNotNull"
-            ]
-          }
-        },
-        {
-          "id": "transpose",
-          "options": {}
-        },
-        {
-          "id": "extractFields",
-          "options": {
-            "format": "auto",
-            "source": "Value"
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Value": true
-            },
-            "renameByName": {
-              "Field": "Spot Name"
-            }
-          }
-        }
-      ],
+      "title": "Panel Title",
       "type": "table"
     }
   ],
   "preload": false,
-  "refresh": "1s",
+  "refresh": "5s",
   "schemaVersion": 41,
   "tags": [],
   "templating": {
@@ -171,14 +101,11 @@
   },
   "timepicker": {
     "refresh_intervals": [
-      "500ms",
-      "1s",
-      "2s",
       "5s"
     ]
   },
   "timezone": "browser",
-  "title": "Smart Parking Dashboard",
-  "uid": "eeokpst3k6xogd",
-  "version": 1
+  "title": "Smart Parking Dashboardc2",
+  "uid": "eeokpst3k6xogdc",
+  "version": 2
 }
