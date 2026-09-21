@@ -52,7 +52,56 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "spot_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "zone_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "color"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "fee"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 15,
@@ -80,11 +129,40 @@
             "type": "influxdb",
             "uid": "xU6Z19aVk"
           },
-          "query": "\nfrom(bucket: \"UseCase2\")\n  |> range(start: -15m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"parking_spots\")\n  // 1. Exclude the numeric field causing the collision\n  |> filter(fn: (r) => r[\"_field\"] != \"occupied\")\n  // 2. Cast all remaining field values to string as a safeguard\n  |> toString()\n  // 3. Take the most recent entry for each field\n  |> group(columns: [\"zone_id\", \"spot_id\", \"_field\"])\n  |> last()\n  // 4. Pivot fields into table columns\n  |> group(columns: [\"zone_id\", \"spot_id\"])\n  |> pivot(\n      rowKey: [\"zone_id\", \"spot_id\"],\n      columnKey: [\"_field\"],\n      valueColumn: \"_value\"\n  )\n  // 5. Merge all spots and sort\n  |> group()\n  |> sort(columns: [\"zone_id\", \"spot_id\"])\n  // 6. Select and order output columns\n  |> keep(columns: [\"zone_id\", \"spot_id\", \"status\", \"type\", \"color\", \"entry_time\", \"dwell_time\"])",
+          "query": "from(bucket: \"UseCase2\")\n  |> range(start: -15m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"parking_spots\")\n  // 1. Exclude the raw occupied integer field to avoid type collisions\n  |> filter(fn: (r) => r[\"_field\"] != \"occupied\")\n  // 2. Cast values to string to ensure the pivot works perfectly\n  |> toString()\n  // 3. Grab the latest point for each parking spot\n  |> group(columns: [\"zone_id\", \"spot_id\", \"_field\"])\n  |> last()\n  // 4. Pivot fields into table columns\n  |> group(columns: [\"zone_id\", \"spot_id\"])\n  |> pivot(\n      rowKey: [\"zone_id\", \"spot_id\"],\n      columnKey: [\"_field\"],\n      valueColumn: \"_value\"\n  )\n  // 5. Group together and sort sequentially\n  |> group()\n  |> sort(columns: [\"zone_id\", \"spot_id\"])\n  // 6. Output columns in order including our new calculated fields\n  |> keep(columns: [\"zone_id\", \"spot_id\", \"status\", \"type\", \"color\", \"entry_time\", \"dwell_time\", \"fee\"])\n",
           "refId": "A"
         }
       ],
       "title": "Panel Title",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {
+              "color": 6,
+              "dwell_time": 2,
+              "entry_time": 3,
+              "fee": 7,
+              "spot_id": 0,
+              "status": 4,
+              "type": 5,
+              "zone_id": 1
+            },
+            "renameByName": {
+              "color": "Vehicle Color",
+              "dwell_time": "Dwell Time",
+              "entry_time": "Entry Time",
+              "fee": "Fee",
+              "spot_id": "Parking Spot ID",
+              "status": "Parking Lot Occupy Status",
+              "type": "Vehicle Type",
+              "zone_id": "Parking Level"
+            }
+          }
+        }
+      ],
       "type": "table"
     }
   ],
@@ -107,5 +185,5 @@
   "timezone": "browser",
   "title": "Smart Parking Dashboardc2",
   "uid": "eeokpst3k6xogdc",
-  "version": 2
+  "version": 5
 }
