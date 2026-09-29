@@ -1,73 +1,5 @@
 [
     {
-        "id": "2565308851e08a7a",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "6f1d3aa6fc4865cc",
-        "type": "subflow",
-        "name": "Bounding Box Annotator",
-        "info": "",
-        "category": "",
-        "in": [
-            {
-                "x": 80,
-                "y": 180,
-                "wires": [
-                    {
-                        "id": "df99985d1f994959"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 1480,
-                "y": 620,
-                "wires": [
-                    {
-                        "id": "b0dac872bf034754",
-                        "port": 0
-                    },
-                    {
-                        "id": "96668e7ad6a75e0d",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [],
-        "meta": {},
-        "color": "#DDAA99"
-    },
-    {
-        "id": "387559d072e0373c",
-        "type": "subflow",
-        "name": "Bounding Box Annotator (1) (1) (1)",
-        "info": "",
-        "category": "",
-        "in": [
-            {
-                "x": 80,
-                "y": 180,
-                "wires": []
-            }
-        ],
-        "out": [
-            {
-                "x": 1480,
-                "y": 620,
-                "wires": []
-            }
-        ],
-        "env": [],
-        "meta": {},
-        "color": "#DDAA99"
-    },
-    {
         "id": "2671a73a1d89208a",
         "type": "subflow",
         "name": "Bounding Box Annotator (1)",
@@ -103,703 +35,6 @@
         "env": [],
         "meta": {},
         "color": "#DDAA99"
-    },
-    {
-        "id": "1279585c9501834e",
-        "type": "mqtt-broker",
-        "name": "",
-        "broker": "broker",
-        "port": "1883",
-        "tls": "",
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": true,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "autoUnsubscribe": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthRetain": "false",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closeRetain": "false",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willRetain": "false",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
-    },
-    {
-        "id": "56f377808d863d71",
-        "type": "ui_tab",
-        "name": "Home",
-        "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "4b3e41d9e35eaa2a",
-        "type": "ui_base",
-        "theme": {
-            "name": "theme-light",
-            "lightTheme": {
-                "default": "#0094CE",
-                "baseColor": "#0094CE",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": true,
-                "reset": false
-            },
-            "darkTheme": {
-                "default": "#097479",
-                "baseColor": "#097479",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": false
-            },
-            "customTheme": {
-                "name": "Untitled Theme 1",
-                "default": "#4B7930",
-                "baseColor": "#4B7930",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
-            },
-            "themeState": {
-                "base-color": {
-                    "default": "#0094CE",
-                    "value": "#0094CE",
-                    "edited": false
-                },
-                "page-titlebar-backgroundColor": {
-                    "value": "#0094CE",
-                    "edited": false
-                },
-                "page-backgroundColor": {
-                    "value": "#fafafa",
-                    "edited": false
-                },
-                "page-sidebar-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "group-textColor": {
-                    "value": "#1bbfff",
-                    "edited": false
-                },
-                "group-borderColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "group-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "widget-textColor": {
-                    "value": "#111111",
-                    "edited": false
-                },
-                "widget-backgroundColor": {
-                    "value": "#0094ce",
-                    "edited": false
-                },
-                "widget-borderColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "base-font": {
-                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
-                }
-            },
-            "angularTheme": {
-                "primary": "indigo",
-                "accents": "blue",
-                "warn": "red",
-                "background": "grey",
-                "palette": "light"
-            }
-        },
-        "site": {
-            "name": "Node-RED Dashboard",
-            "hideToolbar": "false",
-            "allowSwipe": "false",
-            "lockMenu": "false",
-            "allowTempTheme": "true",
-            "dateFormat": "DD/MM/YYYY",
-            "sizes": {
-                "sx": 48,
-                "sy": 48,
-                "gx": 6,
-                "gy": 6,
-                "cx": 6,
-                "cy": 6,
-                "px": 0,
-                "py": 0
-            }
-        }
-    },
-    {
-        "id": "64cdbc752e72aa52",
-        "type": "ui_group",
-        "name": "BBox Annotator",
-        "tab": "56f377808d863d71",
-        "order": 1,
-        "disp": true,
-        "width": "26",
-        "collapse": false,
-        "className": ""
-    },
-    {
-        "id": "c2dff2cbcb5e51e0",
-        "type": "influxdb",
-        "hostname": "127.0.0.1",
-        "port": 8086,
-        "protocol": "http",
-        "database": "database",
-        "name": "influx",
-        "usetls": false,
-        "tls": "",
-        "influxdbVersion": "2.0",
-        "url": "http://10.107.228.154:8086",
-        "timeout": 10,
-        "rejectUnauthorized": false
-    },
-    {
-        "id": "df99985d1f994959",
-        "type": "function",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "extract frame from video source",
-        "func": "flow.set(\"$parent.user_configuration\", msg.payload);\nflow.set(\"$parent.user_configuration_json_path\", \"/data/public/user_configuration/\" + msg.payload + \".json\");\nflow.set(\"$parent.user_configuration_target_json_path\", \"/data/public/user_configuration/target.json\");\nflow.set(\"$parent.user_configuration_image_path\", \"/data/public/images/\" + msg.payload + \".jpg\");\nflow.set(\"$parent.user_configuration_target_image_path\", \"/data/public/images/target.jpg\");\nmsg.payload = \"ffmpeg -y -i http://broker:1880/videos/\" + msg.payload + \".mp4 -ss 00:00:01 -vframes 1 /data/public/images/\" + msg.payload + \".jpg\";\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 250,
-        "y": 180,
-        "wires": [
-            [
-                "9c29ce07761393c3"
-            ]
-        ]
-    },
-    {
-        "id": "9c29ce07761393c3",
-        "type": "exec",
-        "z": "6f1d3aa6fc4865cc",
-        "command": "",
-        "addpay": "payload",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "",
-        "x": 450,
-        "y": 180,
-        "wires": [
-            [
-                "816c330835a613c7"
-            ],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "b9786d7c71690c77",
-        "type": "function",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "copy configuration file to target path",
-        "func": "var target_json_path = flow.get(\"$parent.user_configuration_target_json_path\");\nvar json_path = flow.get(\"$parent.user_configuration_json_path\");\nmsg.payload = \"cp \" + json_path + \" \" + target_json_path;\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1460,
-        "y": 180,
-        "wires": [
-            [
-                "3a35f9c6c8521b1a"
-            ]
-        ]
-    },
-    {
-        "id": "3a35f9c6c8521b1a",
-        "type": "exec",
-        "z": "6f1d3aa6fc4865cc",
-        "command": "",
-        "addpay": "payload",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "",
-        "x": 1670,
-        "y": 180,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "345bc96f5f851ecb",
-        "type": "function",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "create new configuration file",
-        "func": "msg.payload = { \"bboxes\": {} };\nmsg.filename = flow.get('$parent.user_configuration_json_path');\nreturn msg;\n\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1000,
-        "y": 280,
-        "wires": [
-            [
-                "eb824d410951906f"
-            ]
-        ]
-    },
-    {
-        "id": "eb824d410951906f",
-        "type": "file",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "",
-        "filename": "filename",
-        "filenameType": "msg",
-        "appendNewline": true,
-        "createDir": false,
-        "overwriteFile": "true",
-        "encoding": "none",
-        "x": 1220,
-        "y": 280,
-        "wires": [
-            [
-                "b9786d7c71690c77"
-            ]
-        ]
-    },
-    {
-        "id": "816c330835a613c7",
-        "type": "function",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "copy image to target path",
-        "func": "var target_image_path = flow.get(\"$parent.user_configuration_target_image_path\");\nvar image_path = flow.get(\"$parent.user_configuration_image_path\");\nmsg.payload = \"cp \" + image_path + \" \" + target_image_path;\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 630,
-        "y": 180,
-        "wires": [
-            [
-                "f457658937757aa8"
-            ]
-        ]
-    },
-    {
-        "id": "f457658937757aa8",
-        "type": "exec",
-        "z": "6f1d3aa6fc4865cc",
-        "command": "",
-        "addpay": "payload",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "",
-        "x": 810,
-        "y": 180,
-        "wires": [
-            [
-                "19cb7eb1ba17a59f"
-            ],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "aa47f138c69f2744",
-        "type": "file in",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "READ JSON",
-        "filename": "filename",
-        "filenameType": "msg",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 1230,
-        "y": 180,
-        "wires": [
-            [
-                "b9786d7c71690c77"
-            ]
-        ]
-    },
-    {
-        "id": "19cb7eb1ba17a59f",
-        "type": "function",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "check if configuration file exists",
-        "func": "msg.filename = flow.get('$parent.user_configuration_json_path');\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1010,
-        "y": 180,
-        "wires": [
-            [
-                "aa47f138c69f2744"
-            ]
-        ]
-    },
-    {
-        "id": "213a470553e48789",
-        "type": "catch",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "",
-        "scope": [
-            "aa47f138c69f2744"
-        ],
-        "uncaught": false,
-        "x": 810,
-        "y": 280,
-        "wires": [
-            [
-                "345bc96f5f851ecb"
-            ]
-        ]
-    },
-    {
-        "id": "0e157a7ac6b4c0f6",
-        "type": "ui_template",
-        "z": "6f1d3aa6fc4865cc",
-        "group": "64cdbc752e72aa52",
-        "name": "",
-        "order": 1,
-        "width": "0",
-        "height": "0",
-        "format": "<div style=\"text-align: left;\">\n\t<canvas id=\"drawingCanvas\" width=\"1280\" height=\"720\" style=\"border:1px solid #000;\"></canvas>\n\t<div style=\"position: relative; z-index: 1;\">\n\t</div>\n\t<button onclick=\"addBbox()\">New Bbox</button>\n\t<button onclick=\"removeBbox()\">Remove Bbox</button>\n\t<button onclick=\"resetBbox()\">Reset Bbox</button>\n\t<button onclick=\"clearBbox()\">Clear Bbox</button>\n\t<button onclick=\"updateBbox()\">Save Bbox</button>\n\t<button onclick=\"storeInput()\">Click to Input Text</button>\n\t<input type=\"text\" id=\"userInput\" style=\"display: none;\" placeholder=\"Type something...\">\n\t<p id=\"displayText\"></p>\n</div>\n\n<div id=\"savePopupBox\"\n\tstyle=\"display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255, 255, 255, 1); padding: 20px; border-radius: 10px; z-index: 1000;\">\n\t<p style=\"color: black; font-size: 16px; font-weight: bold;\">\n\t\tConfiguration Saved!</p>\n</div>\n\n\n<script>\n\tlet targetBBoxData;\n\tlet handleSize = 10;\n\tlet drag = false;\n\tlet resize = [];\n\tlet bboxList = [];\n\tlet offsetX = [];\n\tlet offsetY = [];\n\tlet currentBboxName = \"not-set\";\n\tlet newBboxName = \"not-set\";\n\tconst canvas = document.getElementById(\"drawingCanvas\");\n\tconst ctx = canvas.getContext(\"2d\");\n\n\tresetBbox();\n\n\tconst new_img = new Image();\n\tnew_img.src = \"/images/target.jpg\"\n\tnew_img.onload = function() {\n\t  ctx.drawImage(new_img, 0, 0, canvas.width, canvas.height);\n\t  drawBBoxes(targetBBoxData.bboxes);\n\t};\n\t\n\tfunction drawBBoxes(bboxes) {\n\t\tctx.clearRect(0, 0, canvas.width, canvas.height);\n\t\tctx.drawImage(new_img, 0, 0, canvas.width, canvas.height);\n\t\tObject.entries(bboxes).forEach(([bbox_name, bbox]) => {\n\t\t\tdrawHandles(bbox_name, bbox);\n\t\t})\n\t}\n  \n\tfunction activate_savepopup() {\n\t\tdocument.getElementById(\"savePopupBox\").style.display = \"block\";\n\t\tsetTimeout(close_savePopup, 2000);\n\t}\n\t\n\tfunction close_savePopup() {\n\t\tdocument.getElementById(\"savePopupBox\").style.display = \"none\";\n\t}\n\n\tfunction drawHandles(bbox_name, bbox) {\n\t\tctx.strokeStyle = 'orange';\n\t\tctx.lineWidth = 2;\n\t\t\n\t\t//\"vertex1\": {\"x\": 1, \"y\": 1}\n\t\tctx.beginPath();\n\t\tctx.moveTo(bbox.vertex1.x, bbox.vertex1.y);\n\t\tctx.lineTo(bbox.vertex2.x, bbox.vertex2.y);\n\t\tctx.lineTo(bbox.vertex4.x, bbox.vertex4.y);\n\t\tctx.lineTo(bbox.vertex3.x, bbox.vertex3.y);\n\t\tctx.lineTo(bbox.vertex1.x, bbox.vertex1.y);\n\t\tctx.closePath();\n\t\tctx.stroke();\n\t\tctx.fillStyle = 'red';\n\t\tctx.fillRect(bbox.vertex1.x - handleSize / 2, bbox.vertex1.y - handleSize / 2, handleSize, handleSize);\n\t\tctx.fillRect(bbox.vertex2.x - handleSize / 2, bbox.vertex2.y - handleSize / 2, handleSize, handleSize);\n\t\tctx.fillRect(bbox.vertex3.x - handleSize / 2, bbox.vertex3.y - handleSize / 2, handleSize, handleSize);\n\t\tctx.fillRect(bbox.vertex4.x - handleSize / 2, bbox.vertex4.y - handleSize / 2, handleSize, handleSize);\n\t\tctx.fillStyle = 'yellow';\n\t\tctx.font = \"24px Arial\";\n\t\tctx.textAlign = \"center\";\n\t\tctx.fillText(bbox_name, bbox.vertex1.x, bbox.vertex1.y - handleSize);\n\t}\n  \n\tcanvas.addEventListener('mousedown', (e) => {\n\t\tlet mousePos = getMousePos(e, canvas);\n\t\tbboxList = [];\n\t\toffsetX = [];\n\t\toffsetY = [];\n\t\tresize = [];\n\t\tObject.entries(targetBBoxData.bboxes).reverse().forEach(([bbox_name, bbox]) => {\n\t\t\tif (isOnHandle(mousePos, bbox, 'top-left')) {\n\t\t\t\tcurrentBboxName = bbox_name;\n\t\t\t\taddResizeIfNotExists(resize, \"top-left\")\n\t\t\t\taddBoxIfNotExists(bboxList, bbox);\n\t\t\t\tconsole.log(\"on Handle\");\n\t\t\t}\n\t\t\telse if (isOnHandle(mousePos, bbox, 'top-right')) {\n\t\t\t\tcurrentBboxName = bbox_name;\n\t\t\t\taddResizeIfNotExists(resize, \"top-right\")\n\t\t\t\taddBoxIfNotExists(bboxList, bbox);\n\t\t\t\tconsole.log(\"on Handle\");\n\t\t\t}\n\t\t\telse if (isOnHandle(mousePos, bbox, 'bottom-left')) {\n\t\t\t\tcurrentBboxName = bbox_name;\n\t\t\t\taddResizeIfNotExists(resize, \"bottom-left\")\n\t\t\t\taddBoxIfNotExists(bboxList, bbox);\n\t\t\t\tconsole.log(\"on Handle\");\n\t\t\t}\n\t\t\telse if (isOnHandle(mousePos, bbox, 'bottom-right')) {\n\t\t\t\tcurrentBboxName = bbox_name;\n\t\t\t\taddResizeIfNotExists(resize, \"bottom-right\")\n\t\t\t\taddBoxIfNotExists(bboxList, bbox);\n\t\t\t\tconsole.log(\"on Handle\");\n\t\t\t}\n\t\t})\n\n\t\tif (resize.length === 0) {\n\t\t\tObject.entries(targetBBoxData.bboxes).reverse().forEach(([bbox_name, bbox]) => {\n\t\t\t\tif (isInsideRect(mousePos, bbox)) {\n\t\t\t\t\tconsole.log(\"inside Rect\");\n\t\t\t\t\tdrag = true;\n\t\t\t\t\tcurrentBboxName = bbox_name;\n\t\t\t\t\tvar tx1 = mousePos.x - bbox.vertex1.x;\n\t\t\t\t\tvar tx2 = mousePos.x - bbox.vertex2.x;\n\t\t\t\t\tvar tx3 = mousePos.x - bbox.vertex3.x;\n\t\t\t\t\tvar tx4 = mousePos.x - bbox.vertex4.x;\n\t\t\t\t\tvar ty1 = mousePos.y - bbox.vertex1.y;\n\t\t\t\t\tvar ty2 = mousePos.y - bbox.vertex2.y;\n\t\t\t\t\tvar ty3 = mousePos.y - bbox.vertex3.y;\n\t\t\t\t\tvar ty4 = mousePos.y - bbox.vertex4.y;\n\t\t\t\t\taddOffsetIfNotExists_4p(offsetX, offsetY, tx1, ty1, tx2, ty2, tx3, ty3, tx4, ty4);\n\t\t\t\t\taddBoxIfNotExists(bboxList, bbox);\n\t\t\t\t}\n\t\t\t})\n\t\t}\n\t});\n\n\tcanvas.addEventListener('mousemove', (e) => {\n\t\tlet mousePos = getMousePos(e, canvas);\n\t\tif (drag && bboxList.length > 0) {\n\t\t\tbboxList[0].vertex1.x = mousePos.x - offsetX[0][0];\n\t\t\tbboxList[0].vertex2.x = mousePos.x - offsetX[0][1];\n\t\t\tbboxList[0].vertex3.x = mousePos.x - offsetX[0][2];\n\t\t\tbboxList[0].vertex4.x = mousePos.x - offsetX[0][3];\n\t\t\tbboxList[0].vertex1.y = mousePos.y - offsetY[0][0];\n\t\t\tbboxList[0].vertex2.y = mousePos.y - offsetY[0][1];\n\t\t\tbboxList[0].vertex3.y = mousePos.y - offsetY[0][2];\n\t\t\tbboxList[0].vertex4.y = mousePos.y - offsetY[0][3];\n\t\t\tdrawBBoxes(targetBBoxData.bboxes);\n\t\t}\n\t\tif (resize.length > 0 && bboxList.length > 0) {\n\t\t\tif (resize[0] === \"top-left\") {\n\t\t\t\tbboxList[0].vertex1.x = mousePos.x;\n\t\t\t\tbboxList[0].vertex1.y = mousePos.y;\n\t\t\t}\n\t\t\tif (resize[0] === \"top-right\") {\n\t\t\t\tbboxList[0].vertex2.x = mousePos.x;\n\t\t\t\tbboxList[0].vertex2.y = mousePos.y;\n\t\t\t}\n\t\t\tif (resize[0] === \"bottom-left\") { \n\t\t\t\tbboxList[0].vertex3.x = mousePos.x;\n\t\t\t\tbboxList[0].vertex3.y = mousePos.y;\n\t\t\t}\n\t\t\tif (resize[0] === \"bottom-right\") {\n\t\t\t\tbboxList[0].vertex4.x = mousePos.x;\n\t\t\t\tbboxList[0].vertex4.y = mousePos.y;\n\t\t\t}\n\t\t\tdrawBBoxes(targetBBoxData.bboxes);\n\t\t}\n\t});\n\n\tcanvas.addEventListener('mouseup', () => {\n\t\tdrag = false;\n\t\tresize = [];\n\t});\n\n\tfunction getMousePos(evt, canvas) {\n\t\tconst canva_rect = canvas.getBoundingClientRect();\n\t\treturn {\n\t\t\tx: evt.clientX - canva_rect.left,\n\t\t\ty: evt.clientY - canva_rect.top\n\t\t};\n\t}\n\t\n\tfunction addBoxIfNotExists(bboxList, box) {\n\t\tif (!bboxList.includes(box)) {\n\t\t\tbboxList.push(box);\n\t\t}\n\t}\n\n\tfunction addOffsetIfNotExists(offsetX, offsetY, x, y) {\n\t\tif (!offsetX.includes(x)) {\n\t\t\toffsetX.push(x);\n\t\t\toffsetY.push(y);\n\t\t}\n\t}\n\n\tfunction addOffsetIfNotExists_4p(offsetX, offsetY, x1, y1, x2, y2, x3, y3, x4, y4) {\n\t\tif (!offsetX.includes([x1, x2, x3, x4])) {\n\t\t\toffsetX.push([x1, x2, x3, x4]);\n\t\t\toffsetY.push([y1, y2, y3, y4]);\n\t\t}\n\t}\n\t\n\tfunction addResizeIfNotExists(resize, x) {\n\t\tif (!resize.includes(x)) {\n\t\t\tresize.push(x);\n\t\t}\n\t}\n\n\tfunction isInsideRect(pos, bbox) {\n\t\tfunction crossProduct(x1, y1, x2, y2, x3, y3) {\n\t\t\treturn (x2 - x1) * (y3 - y1) - (y2 - y1) * (x3 - x1);\n\t\t}\n\t\tvar d1 = crossProduct(pos.x, pos.y, bbox.vertex1.x, bbox.vertex1.y, bbox.vertex2.x, bbox.vertex2.y);\n\t\tvar d2 = crossProduct(pos.x, pos.y, bbox.vertex2.x, bbox.vertex2.y, bbox.vertex4.x, bbox.vertex4.y);\n\t\tvar d3 = crossProduct(pos.x, pos.y, bbox.vertex4.x, bbox.vertex4.y, bbox.vertex3.x, bbox.vertex3.y);\n\t\tvar d4 = crossProduct(pos.x, pos.y, bbox.vertex3.x, bbox.vertex3.y, bbox.vertex1.x, bbox.vertex1.y);\n\t\tvar hasNeg = (d1 < 0) || (d2 < 0) || (d3 < 0) || (d4 < 0);\n\t\tvar hasPos = (d1 > 0) || (d2 > 0) || (d3 > 0) || (d4 > 0);\n\t\treturn !(hasNeg && hasPos);\n\t}\n\t\n\tfunction isOnHandle(pos, rect, corner) {\n\t\tswitch (corner) {\n\t\t\tcase \"top-left\":\n\t\t\t\treturn pos.x > rect.vertex1.x - handleSize / 2 && pos.x < rect.vertex1.x + handleSize / 2\n\t\t\t\t\t&& pos.y > rect.vertex1.y - handleSize / 2 && pos.y < rect.vertex1.y + handleSize / 2;\n\t\t\tcase \"top-right\":\n\t\t\t\treturn pos.x > rect.vertex2.x - handleSize / 2 && pos.x < rect.vertex2.x + handleSize / 2\n\t\t\t\t\t&& pos.y > rect.vertex2.y - handleSize / 2 && pos.y < rect.vertex2.y + handleSize / 2;\n\t\t\tcase \"bottom-left\":\n\t\t\t\treturn pos.x > rect.vertex3.x - handleSize / 2 && pos.x < rect.vertex3.x + handleSize / 2\n\t\t\t\t\t&& pos.y > rect.vertex3.y - handleSize / 2 && pos.y < rect.vertex3.y + handleSize / 2;\n\t\t\tcase \"bottom-right\":\n\t\t\t\treturn pos.x > rect.vertex4.x - handleSize / 2 && pos.x < rect.vertex4.x + handleSize / 2\n\t\t\t\t\t&& pos.y > rect.vertex4.y - handleSize / 2 && pos.y < rect.vertex4.y + handleSize / 2;\n\t\t\tdefault:\n\t\t\t\treturn false;\n\t\t}\n\t}\n\n\tfunction addBbox() {\n\t\ttargetBBoxData.bboxes[newBboxName] = { vertex1: {\"x\": 150, \"y\": 250},  vertex2: {\"x\": 350, \"y\": 250},\n\t\t\tvertex3: {\"x\": 150, \"y\": 450}, vertex4: {\"x\": 350, \"y\": 450}};\n\t\tdrawBBoxes(targetBBoxData.bboxes);\n\t}\n\t\n\tfunction removeBbox() {\n\t\tdelete targetBBoxData.bboxes[currentBboxName];\n\t\tdrawBBoxes(targetBBoxData.bboxes);\n\t}\n\n\tfunction resetBbox() {\n\t\tfetch('/user_configuration/target.json')\n\t\t.then(response => response.json())\n\t\t.then(data => {\n\t\t\ttargetBBoxData = data;\n\t\t\tdrawBBoxes(targetBBoxData.bboxes);\n\t\t})\n\t\t.catch(error => console.error('Error loading JSON:', error));\n\t}\n\n\tfunction clearBbox() {\n\t\ttargetBBoxData = {\"bboxes\":{}};\n\t\tdrawBBoxes(targetBBoxData.bboxes);\n\t}\n\t\n\tfunction updateBbox() {\n\t\tfetch(\"http://broker:1880/user_configuration\", { //\n\t\t  method: \"POST\",\n\t\t  headers: {\n\t\t\t\"Content-Type\": \"application/json\"\n\t\t  },\n\t\t  body: JSON.stringify({ targetBBoxData })\n\t\t})\n\t\t.then(response => response.json())\n\t\t.then(data => console.log(\"Data sent to Node-RED:\", data))\n\t\t.catch(error => console.error(\"Error sending data:\", error));\n\t\tactivate_savepopup();\n\t  }\n\t\n\tfunction storeInput() {\n\t\tlet inputField = document.getElementById('userInput');\n\t\tinputField.style.display = 'inline';\n\t\tinputField.focus();\n\t\tconst handleEnter = function(event) {\n\t\t\tif (event.key === 'Enter') {\n\t\t\t\tnewBboxName = inputField.value;\n\t\t\t\tinputField.style.display = 'none';\n\t\t\t\tinputField.value = '';\n\t\t\t\tinputField.removeEventListener('keypress', handleEnter); \n\t\t\t}\n\t\t};\n\t\tinputField.addEventListener('keypress', handleEnter);\n\t}\n  \n</script>",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 120,
-        "y": 420,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "976fdb34c4a8cb9e",
-        "type": "comment",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "html",
-        "info": "",
-        "x": 110,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "e2bba08a4a54179d",
-        "type": "file",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "",
-        "filename": "filename",
-        "filenameType": "msg",
-        "appendNewline": true,
-        "createDir": false,
-        "overwriteFile": "true",
-        "encoding": "none",
-        "x": 680,
-        "y": 560,
-        "wires": [
-            [
-                "efc05a799d0eb099"
-            ]
-        ]
-    },
-    {
-        "id": "b05b1e3d1cc4654a",
-        "type": "function",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "save endpoint data to configuration file",
-        "func": "msg.payload = msg.payload[\"targetBBoxData\"];\nmsg.filename = flow.get('$parent.user_configuration_json_path');\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 450,
-        "y": 560,
-        "wires": [
-            [
-                "e2bba08a4a54179d",
-                "b0dac872bf034754"
-            ]
-        ]
-    },
-    {
-        "id": "58424bf333efd3fe",
-        "type": "comment",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "save new parking lot data",
-        "info": "",
-        "x": 170,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "efc05a799d0eb099",
-        "type": "function",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "save configuration file to target file",
-        "func": "msg.payload = \"cp \" + flow.get(\"$parent.user_configuration_json_path\") + \" \" + flow.get(\"$parent.user_configuration_target_json_path\");\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 900,
-        "y": 560,
-        "wires": [
-            [
-                "b656a7515c144c0e"
-            ]
-        ]
-    },
-    {
-        "id": "b656a7515c144c0e",
-        "type": "exec",
-        "z": "6f1d3aa6fc4865cc",
-        "command": "",
-        "addpay": "payload",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "",
-        "x": 1110,
-        "y": 560,
-        "wires": [
-            [],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "b0dac872bf034754",
-        "type": "function",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "pre-processing data for dashboard use cases",
-        "func": "let results = {};\nlet payload = msg.payload[\"bboxes\"];\n\nvar canvas_width = 1280;\nvar canvas_height = 720;\nvar video_pipeline_width = flow.get('$parent.video_pipeline_width');\nvar video_pipeline_height = flow.get('$parent.video_pipeline_height');\n\nvar scale_x = video_pipeline_width / canvas_width;\nvar scale_y = video_pipeline_height / canvas_height;\n\nfor (let key in payload) {\n    var vertex1 = { \"x\": payload[key][\"vertex1\"][\"x\"] * scale_x, \"y\": payload[key][\"vertex1\"][\"y\"] * scale_y };\n    var vertex2 = { \"x\": payload[key][\"vertex2\"][\"x\"] * scale_x, \"y\": payload[key][\"vertex2\"][\"y\"] * scale_y };\n    var vertex3 = { \"x\": payload[key][\"vertex4\"][\"x\"] * scale_x, \"y\": payload[key][\"vertex4\"][\"y\"] * scale_y };\n    var vertex4 = { \"x\": payload[key][\"vertex3\"][\"x\"] * scale_x, \"y\": payload[key][\"vertex3\"][\"y\"] * scale_y };\n    results[key] = { \"vertex1\": vertex1, \"vertex2\": vertex2, \"vertex3\": vertex3, \"vertex4\": vertex4 };\n}\n\nmsg.payload = results;\nmsg.bbox_name = flow.get(\"$parent.user_configuration\");\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 790,
-        "y": 620,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "9ba81c2ec580b296",
-        "type": "function",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "list config files",
-        "func": "msg.payload = \"ls /data/public/user_configuration\";\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 220,
-        "y": 740,
-        "wires": [
-            [
-                "565ee24f2c20c513"
-            ]
-        ]
-    },
-    {
-        "id": "565ee24f2c20c513",
-        "type": "exec",
-        "z": "6f1d3aa6fc4865cc",
-        "command": "",
-        "addpay": "payload",
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "",
-        "x": 370,
-        "y": 740,
-        "wires": [
-            [
-                "308c4663480ec670"
-            ],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "f5306da2266ca53e",
-        "type": "inject",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 130,
-        "y": 660,
-        "wires": [
-            [
-                "9ba81c2ec580b296"
-            ]
-        ]
-    },
-    {
-        "id": "308c4663480ec670",
-        "type": "function",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "excluding target files",
-        "func": "let inputString = msg.payload;\n\nlet substrings = inputString.split(\"\\n\");\nconst stringToRemove = [\"target.json\", \"\"];\n\nsubstrings = substrings.filter(substring =>\n    !stringToRemove.includes(substring)\n);\n\nfor (let i = 0; i < substrings.length; i++) {\n    substrings[i] = \"/data/public/user_configuration/\" + substrings[i]\n}\n\nmsg.payload = substrings;\nmsg.filenames = substrings;\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 540,
-        "y": 740,
-        "wires": [
-            [
-                "fdfab09a7c4051bd"
-            ]
-        ]
-    },
-    {
-        "id": "fdfab09a7c4051bd",
-        "type": "split",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "Split File Paths",
-        "splt": "",
-        "spltType": "str",
-        "arraySplt": "1",
-        "arraySpltType": "len",
-        "stream": false,
-        "addname": "",
-        "x": 740,
-        "y": 740,
-        "wires": [
-            [
-                "90125a488d1c55ca"
-            ]
-        ]
-    },
-    {
-        "id": "90125a488d1c55ca",
-        "type": "file in",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "",
-        "filename": "payload",
-        "filenameType": "msg",
-        "format": "utf8",
-        "chunk": false,
-        "sendError": false,
-        "encoding": "none",
-        "allProps": false,
-        "x": 900,
-        "y": 740,
-        "wires": [
-            [
-                "96668e7ad6a75e0d"
-            ]
-        ]
-    },
-    {
-        "id": "96668e7ad6a75e0d",
-        "type": "function",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "pre-processing file data for dashboard use cases",
-        "func": "msg.payload = JSON.parse(msg.payload);\n\nvar filePath = msg.filename;\nvar fileName = filePath.substring(filePath.lastIndexOf('/') + 1);\nfileName = fileName.substring(0, fileName.lastIndexOf('.'));\n\nlet results = {};\nlet payload = msg.payload[\"bboxes\"];\n\nvar canvas_width = 1280;\nvar canvas_height = 720;\nvar video_pipeline_width = flow.get('$parent.video_pipeline_width');\nvar video_pipeline_height = flow.get('$parent.video_pipeline_height');\n\nvar scale_x = video_pipeline_width / canvas_width;\nvar scale_y = video_pipeline_height / canvas_height;\n\nfor (let key in payload) {\n    var vertex1 = { \"x\": payload[key][\"vertex1\"][\"x\"] * scale_x, \"y\": payload[key][\"vertex1\"][\"y\"] * scale_y };\n    var vertex2 = { \"x\": payload[key][\"vertex2\"][\"x\"] * scale_x, \"y\": payload[key][\"vertex2\"][\"y\"] * scale_y };\n    var vertex3 = { \"x\": payload[key][\"vertex4\"][\"x\"] * scale_x, \"y\": payload[key][\"vertex4\"][\"y\"] * scale_y }; // clockwise order\n    var vertex4 = { \"x\": payload[key][\"vertex3\"][\"x\"] * scale_x, \"y\": payload[key][\"vertex3\"][\"y\"] * scale_y };\n    results[key] = { \"vertex1\": vertex1, \"vertex2\": vertex2, \"vertex3\": vertex3, \"vertex4\": vertex4 };\n}\n\nmsg.payload = results;\nmsg.bbox_name = fileName;\nreturn msg;\n",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1180,
-        "y": 740,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "98e20d0688e95a58",
-        "type": "http in",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "",
-        "url": "/user_configuration",
-        "method": "post",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 170,
-        "y": 560,
-        "wires": [
-            [
-                "b05b1e3d1cc4654a"
-            ]
-        ]
-    },
-    {
-        "id": "0356ffb2221df2b0",
-        "type": "comment",
-        "z": "6f1d3aa6fc4865cc",
-        "name": "frame extraction",
-        "info": "",
-        "x": 140,
-        "y": 100,
-        "wires": []
     },
     {
         "id": "8d9ff1eff4def0bb",
@@ -1336,6 +571,32 @@
         "wires": []
     },
     {
+        "id": "64cdbc752e72aa52",
+        "type": "ui_group",
+        "name": "BBox Annotator",
+        "tab": "56f377808d863d71",
+        "order": 1,
+        "disp": true,
+        "width": "26",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "56f377808d863d71",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "2565308851e08a7a",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "2cd8d39807954e54",
         "type": "comment",
         "z": "2565308851e08a7a",
@@ -1838,7 +1099,7 @@
         "type": "data extraction",
         "z": "2565308851e08a7a",
         "name": "data extraction 1",
-        "func": "let payload = msg.payload[\"metadata\"][\"objects\"];\nlet result = {};\nlet counter = 1;\n\nvar object_confidence = flow.get(\"object_confidence\");\nvar target_object = flow.get(\"target_object\");\nvar stop_duration = flow.get(\"stop_duration\");\n\nvar date = new Date();\nvar localDate = new Date();\n\nvar years = localDate.getFullYear();\nvar months = (localDate.getMonth() + 1).toString().padStart(2, \"0\");\nvar dates = (localDate.getDate()).toString().padStart(2, \"0\");\nvar hours = localDate.getHours();\nvar minutes = localDate.getMinutes();\nvar seconds = localDate.getSeconds();\n\nhours = (\"0\" + hours).slice(-2);\nminutes = (\"0\" + minutes).slice(-2);\nseconds = (\"0\" + seconds).slice(-2);\n\nmsg.nodered_timestamp = years + \"/\" + months + \"/\" + dates + \" \" + hours + \":\" + minutes + \":\" + seconds;\nmsg.object_timestamp = new Date().getTime() / 1000;\n\nfor (let key in payload) {\n    if (payload.hasOwnProperty(key) && payload[key].hasOwnProperty(\"detection\")) {\n        if (!(target_object.length == 1 && target_object[0] == \"\")) {\n            var skip = true;\n            for (let i = 0; i < target_object.length; i++) {\n                if (payload[key][\"roi_type\"] == target_object[i]) {\n                    skip = false;\n                    break;\n                }\n            }\n            if (skip == true) { continue; }\n        }\n        if (payload[key][\"detection\"][\"confidence\"] > object_confidence) {\n            var current_object_data = {\n                \"bbox\": {\n                    \"vertex1\": { \"x\": payload[key][\"x\"], \"y\": payload[key][\"y\"] },\n                    \"vertex2\": { \"x\": payload[key][\"x\"] + payload[key][\"w\"], \"y\": payload[key][\"y\"] },\n                    \"vertex3\": { \"x\": payload[key][\"x\"] + payload[key][\"w\"], \"y\": payload[key][\"y\"] + payload[key][\"h\"] },\n                    \"vertex4\": { \"x\": payload[key][\"x\"], \"y\": payload[key][\"y\"] + payload[key][\"h\"] },\n                    \"vertex_0\": { \"x\": payload[key][\"x\"], \"y\": payload[key][\"y\"] }\n                }\n            }\n            // Extract type from detection.label\n            if (payload[key].hasOwnProperty(\"detection\") && payload[key][\"detection\"].hasOwnProperty(\"label\")) {\n                current_object_data[\"type\"] = payload[key][\"detection\"][\"label\"];\n            }\n            // Extract color from classification_layer_name:output.label\n            if (payload[key].hasOwnProperty(\"classification_layer_name:output\") && payload[key][\"classification_layer_name:output\"].hasOwnProperty(\"label\")) {\n                current_object_data[\"color\"] = payload[key][\"classification_layer_name:output\"][\"label\"];\n            }\n            // Extract license plate (if exists in future)\n            if (payload[key].hasOwnProperty(\"license_plate\") && payload[key][\"license_plate\"].hasOwnProperty(\"label\")) {\n                current_object_data[\"license_plate\"] = payload[key][\"license_plate\"][\"label\"];\n            }\n            // Extract tracking ID (if exists)\n            if (payload[key].hasOwnProperty(\"id\")) {\n                current_object_data[\"id\"] = payload[key][\"id\"];\n            }\n            // Extract ROI type\n            if (payload[key].hasOwnProperty(\"roi_type\")) {\n                current_object_data[\"roi_type\"] = payload[key][\"roi_type\"];\n            }\n            result[`object_${counter++}`] = current_object_data;\n        }\n    }\n}\n\nif (Object.keys(result).length > 0) {\n    msg.payload = result;\n    return msg;\n}",
+        "func": "let rawObjects = msg.payload && msg.payload.metadata ? msg.payload.metadata.objects : null;\n\nif (!rawObjects || Object.keys(rawObjects).length === 0) {\n    return null;\n}\n\nlet target_objects = flow.get(\"target_object\") || [\"car\", \"truck\", \"bus\"];\nlet object_confidence = flow.get(\"object_confidence\") || 0.3;\n\n// Format timestamps for downstream tracking\nlet localDate = new Date();\nlet years = localDate.getFullYear();\nlet months = (localDate.getMonth() + 1).toString().padStart(2, \"0\");\nlet dates = localDate.getDate().toString().padStart(2, \"0\");\nlet hours = localDate.getHours().toString().padStart(2, \"0\");\nlet minutes = localDate.getMinutes().toString().padStart(2, \"0\");\nlet seconds = localDate.getSeconds().toString().padStart(2, \"0\");\n\nmsg.nodered_timestamp = `${years}/${months}/${dates} ${hours}:${minutes}:${seconds}`;\nmsg.object_timestamp = localDate.getTime() / 1000;\n\n// Helper: Extract OCR string from PP-OCR layer or tensors\nfunction extractPlateText(obj) {\n    // 1. Check tensors array\n    if (Array.isArray(obj.tensors)) {\n        for (let t of obj.tensors) {\n            if (t.name && t.name.includes(\"softmax\") && t.label) {\n                return t.label.trim();\n            }\n        }\n    }\n    // 2. Check classification layer properties\n    for (let key in obj) {\n        if (key.includes(\"softmax\") && obj[key] && obj[key].label) {\n            return obj[key].label.trim();\n        }\n    }\n    return \"\";\n}\n\nlet detected_vehicles = [];\nlet detected_plates = [];\n\n// Step 1: Separate Vehicles and License Plates from incoming payload\nfor (let key in rawObjects) {\n    let item = rawObjects[key];\n    if (!item || !item.detection) continue;\n\n    let roiType = item.roi_type || (item.detection && item.detection.label) || \"\";\n    let conf = item.detection.confidence || 0;\n\n    // Check if item is a license plate\n    if (roiType === \"English\" || roiType === \"license_plate\" || roiType === \"number_plate\") {\n        let plateText = extractPlateText(item);\n        detected_plates.push({\n            x: item.x,\n            y: item.y,\n            w: item.w,\n            h: item.h,\n            text: plateText\n        });\n    }\n    // Check if item is a vehicle matching target types and confidence\n    else if (target_objects.includes(roiType) && conf >= object_confidence) {\n        detected_vehicles.push(item);\n    }\n}\n\nlet result = {};\nlet counter = 1;\n\n// Step 2: Correlate License Plates to their Parent Vehicle\nfor (let v of detected_vehicles) {\n    let vx = v.x;\n    let vy = v.y;\n    let vw = v.w;\n    let vh = v.h;\n\n    let current_object_data = {\n        \"bbox\": {\n            \"vertex1\": { \"x\": vx, \"y\": vy },\n            \"vertex2\": { \"x\": vx + vw, \"y\": vy },\n            \"vertex3\": { \"x\": vx + vw, \"y\": vy + vh },\n            \"vertex4\": { \"x\": vx, \"y\": vy + vh },\n            \"vertex_0\": { \"x\": vx, \"y\": vy }\n        },\n        \"type\": (v.detection && v.detection.label) || v.roi_type || \"car\",\n        \"roi_type\": v.roi_type || \"car\",\n        \"color\": \"-\",\n        \"license_plate\": \"\",\n        \"id\": v.id || null\n    };\n\n    // Extract Vehicle Color\n    if (v[\"classification_layer_name:output\"] && v[\"classification_layer_name:output\"].label) {\n        current_object_data[\"color\"] = v[\"classification_layer_name:output\"].label;\n    } else {\n        for (let prop in v) {\n            if (prop.startsWith(\"classification_layer_name\") && !prop.includes(\"softmax\") && v[prop].label) {\n                current_object_data[\"color\"] = v[prop].label;\n                break;\n            }\n        }\n    }\n\n    // Geometrically check if any detected license plate is inside this vehicle\n    for (let p of detected_plates) {\n        let plate_cx = p.x + (p.w / 2);\n        let plate_cy = p.y + (p.h / 2);\n\n        // Does plate center fall within vehicle boundary?\n        if (plate_cx >= vx && plate_cx <= (vx + vw) && plate_cy >= vy && plate_cy <= (vy + vh)) {\n            current_object_data[\"license_plate\"] = p.text;\n            break; // Plate matched\n        }\n    }\n\n    result[`object_${counter++}`] = current_object_data;\n}\n\nif (Object.keys(result).length > 0) {\n    msg.payload = result;\n    return msg;\n}\n\nreturn null;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -2041,7 +1302,7 @@
         "type": "data table output",
         "z": "2565308851e08a7a",
         "name": "data table output 1",
-        "func": "var header = [\"Zone ID\", \"Spot ID\", \"Status\", \"Type\", \"Color\", \"Entry Time\", \"Dwell Time\"];\nvar data = [\"video_id\", \"region_id\", \"occupied\", \"roi_type\", \"color\", \"actual_entry_time\", \"actual_dwell_time\"];\nvar first_region_name = \"Region 1_1 1\";\n\nvar result = { \"payload\": {} };\nvar payload = msg.payload;\nvar keys = Object.keys(payload);\nvar stop_duration = flow.get(\"stop_duration\");\n\nif (keys.length == 0) {\n    return result;\n}\n\nvar offset = 0;\n\nfor (let i = 0; i < keys.length; i++) {\n    var num_data = 1;\n\n    for (let h = 0; h < data.length; h++) {\n        var data_value = payload[keys[i]][data[h]];\n        if (Array.isArray(data_value) && data_value.length > num_data) {\n            num_data = data_value.length;\n        }\n    }\n\n    for (let h = 0; h < num_data; h++) {\n\n        if (h > 0) {\n            offset += 1;\n        }\n\n        if (payload[keys[i]].hasOwnProperty(\"id\") && payload[keys[i]][\"dwell_time\"][h] < stop_duration) {\n            if (h > 0) {\n                offset -= 1;\n            }\n            continue;\n        }\n        var region_name = \"Region \" + payload[keys[i]][data[0]] + \"_\" + payload[keys[i]][data[1]] + \" \" + (i + 1 + offset);\n        result.payload[region_name] = {};\n\n        for (let g = 0; g < data.length; g++) {\n            var data_value = payload[keys[i]][data[g]];\n\n            if (data[g] == \"occupied\") {\n                if (data_value == 0) {\n                    result.payload[region_name][header[g]] = \"Empty\";\n                }\n                else {\n                    result.payload[region_name][header[g]] = \"Occupied\";\n                }\n            }\n            else {\n                if (Array.isArray(data_value)) {\n                    data_value = data_value[h];\n                }\n                if (typeof data_value === \"undefined\") {\n                    data_value = \"\";\n                }\n                result.payload[region_name][header[g]] = data_value;\n            }\n        }\n    }\n}\n\nif (Object.keys(result.payload).length == 0) {\n    result.payload[first_region_name] = { \"Status\": \"Empty\" };\n}\n\nreturn result;",
+        "func": "var header = [\"Zone ID\", \"Spot ID\", \"Status\", \"Type\", \"Color\", \"License Plate\", \"Plate Image\", \"Entry Time\", \"Dwell Time\"];\nvar data = [\"video_id\", \"region_id\", \"occupied\", \"roi_type\", \"color\", \"license_plate\", \"plate_image\", \"actual_entry_time\", \"actual_dwell_time\"];\n\nvar first_region_name = \"Region 1_1 1\";\n\n\n\nvar result = { \"payload\": {} };\nvar payload = msg.payload;\nvar keys = Object.keys(payload);\nvar stop_duration = flow.get(\"stop_duration\");\n\nif (keys.length == 0) {\n    return result;\n}\n\nvar offset = 0;\n\nfor (let i = 0; i < keys.length; i++) {\n    var num_data = 1;\n\n    for (let h = 0; h < data.length; h++) {\n        var data_value = payload[keys[i]][data[h]];\n        if (Array.isArray(data_value) && data_value.length > num_data) {\n            num_data = data_value.length;\n        }\n    }\n\n    for (let h = 0; h < num_data; h++) {\n\n        if (h > 0) {\n            offset += 1;\n        }\n\n        if (payload[keys[i]].hasOwnProperty(\"id\") && payload[keys[i]][\"dwell_time\"][h] < stop_duration) {\n            if (h > 0) {\n                offset -= 1;\n            }\n            continue;\n        }\n        var region_name = \"Region \" + payload[keys[i]][data[0]] + \"_\" + payload[keys[i]][data[1]] + \" \" + (i + 1 + offset);\n        result.payload[region_name] = {};\n\n        for (let g = 0; g < data.length; g++) {\n            var data_value = payload[keys[i]][data[g]];\n\n            if (data[g] == \"occupied\") {\n                if (data_value == 0) {\n                    result.payload[region_name][header[g]] = \"Empty\";\n                }\n                else {\n                    result.payload[region_name][header[g]] = \"Occupied\";\n                }\n            }\n            else {\n                if (Array.isArray(data_value)) {\n                    data_value = data_value[h];\n                }\n                if (typeof data_value === \"undefined\") {\n                    data_value = \"\";\n                }\n                result.payload[region_name][header[g]] = data_value;\n            }\n        }\n    }\n}\n\nif (Object.keys(result.payload).length == 0) {\n    result.payload[first_region_name] = { \"Status\": \"Empty\" };\n}\n\nreturn result;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -2061,7 +1322,7 @@
         "type": "function",
         "z": "2565308851e08a7a",
         "name": "function 2",
-        "func": "const rawPayload = msg.payload;\nconst points = [];\n\n// Helper function to convert \"HH:MM:SS\" into total seconds\nfunction parseDwellSeconds(timeStr) {\n    if (!timeStr || timeStr === \"-\" || typeof timeStr !== \"string\") return 0;\n    const parts = timeStr.split(\":\").map(Number);\n    if (parts.length === 3) {\n        return (parts[0] * 3600) + (parts[1] * 60) + parts[2];\n    }\n    return 0;\n}\n\nfor (const [regionName, spot] of Object.entries(rawPayload)) {\n    const rawOccupied = spot[\"Status\"] === \"Occupied\";\n    const dwellSeconds = parseDwellSeconds(spot[\"Dwell Time\"]);\n\n    // 1. First condition: Treat as truly \"Occupied\" only if dwell time > 2 seconds\n    const isTrulyOccupied = rawOccupied && dwellSeconds > 2;\n\n    // 2. Second condition: Calculate billing fee based on dwell time\n    let feeString = \"$0\";\n    if (isTrulyOccupied) {\n        if (dwellSeconds > 5) {\n            feeString = \"$2\";\n        } else {\n            feeString = \"$1\";\n        }\n    }\n\n    const tags = {\n        region: regionName,\n        zone_id: String(spot[\"Zone ID\"] || \"\"),\n        spot_id: String(spot[\"Spot ID\"] || \"\")\n    };\n\n    // Prepare fields to write directly to InfluxDB\n    const fields = {\n        occupied: isTrulyOccupied ? 1 : 0,\n        status: isTrulyOccupied ? \"Occupied\" : \"Empty\",\n        type: isTrulyOccupied && spot[\"Type\"] ? spot[\"Type\"] : \"-\",\n        color: isTrulyOccupied && spot[\"Color\"] ? spot[\"Color\"] : \"-\",\n        entry_time: isTrulyOccupied && spot[\"Entry Time\"] ? spot[\"Entry Time\"] : \"-\",\n        dwell_time: isTrulyOccupied && spot[\"Dwell Time\"] ? spot[\"Dwell Time\"] : \"-\",\n        fee: feeString // New fee field\n    };\n\n    points.push([\n        fields,\n        tags\n    ]);\n}\n\nmsg.measurement = \"parking_spots\";\nmsg.payload = points;\n\nreturn msg;\n",
+        "func": "\n\nconst rawPayload = msg.payload;\nconst points = [];\n\nfunction parseDwellSeconds(timeStr) {\n    if (!timeStr || timeStr === \"-\" || typeof timeStr !== \"string\") return 0;\n    const parts = timeStr.split(\":\").map(Number);\n    if (parts.length === 3) {\n        return (parts[0] * 3600) + (parts[1] * 60) + parts[2];\n    }\n    return 0;\n}\n\nfor (const [regionName, spot] of Object.entries(rawPayload)) {\n    const rawOccupied = spot[\"Status\"] === \"Occupied\";\n    const dwellSeconds = parseDwellSeconds(spot[\"Dwell Time\"]);\n\n    // 1. Dwell condition (>2 seconds)\n    const isTrulyOccupied = rawOccupied && dwellSeconds > 2;\n\n    // 2. Billing fee tier calculation\n    let feeString = \"$0\";\n    if (isTrulyOccupied) {\n        feeString = dwellSeconds > 5 ? \"$2\" : \"$1\";\n    }\n\n    // 3. License plate & OCR detection check\n    const hasPlate = spot[\"License Plate\"] && spot[\"License Plate\"] !== \"-\" && spot[\"License Plate\"] !== \"\";\n    const plateText = isTrulyOccupied && hasPlate ? spot[\"License Plate\"] : \"-\";\n    const plateImage = isTrulyOccupied && hasPlate && spot[\"Plate Image\"] ? spot[\"Plate Image\"] : \"-\";\n\n    // 4. Missing Plate Alarm Logic:\n    // If spot is occupied but plate could not be read -> trigger ALERT\n    let lprAlert = \"NORMAL\";\n    if (isTrulyOccupied && !hasPlate) {\n        lprAlert = \"MISSING_PLATE\";\n    }\n\n    const tags = {\n        region: regionName,\n        zone_id: String(spot[\"Zone ID\"] || \"\"),\n        spot_id: String(spot[\"Spot ID\"] || \"\")\n    };\n\n    const fields = {\n        occupied: isTrulyOccupied ? 1 : 0,\n        status: isTrulyOccupied ? \"Occupied\" : \"Empty\",\n        type: isTrulyOccupied && spot[\"Type\"] ? spot[\"Type\"] : \"-\",\n        color: isTrulyOccupied && spot[\"Color\"] ? spot[\"Color\"] : \"-\",\n        license_plate: plateText,\n        plate_image: plateImage,\n        lpr_alert: lprAlert,\n        entry_time: isTrulyOccupied && spot[\"Entry Time\"] ? spot[\"Entry Time\"] : \"-\",\n        dwell_time: isTrulyOccupied && spot[\"Dwell Time\"] ? spot[\"Dwell Time\"] : \"-\",\n        fee: feeString\n    };\n\n    points.push([\n        fields,\n        tags\n    ]);\n}\n\nmsg.measurement = \"parking_spots\";\nmsg.payload = points;\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -2112,7 +1373,54 @@
         "wires": []
     },
     {
-        "id": "cfe853799b9b4205",
+        "id": "1279585c9501834e",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker",
+        "port": "1883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c2dff2cbcb5e51e0",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "influx",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://10.107.228.154:8086",
+        "timeout": 10,
+        "rejectUnauthorized": false
+    },
+    {
+        "id": "dfba2ab362b60914",
         "type": "global-config",
         "env": [],
         "modules": {

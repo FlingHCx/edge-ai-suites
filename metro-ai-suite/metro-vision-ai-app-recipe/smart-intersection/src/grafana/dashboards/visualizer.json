@@ -100,6 +100,87 @@
                 "value": 80
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "license_plate"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Actual License Plate Image"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Plate Status"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "MISSING_PLATE": {
+                        "color": "red",
+                        "index": 1,
+                        "text": "NO PLATE ALARM"
+                      },
+                      "NORMAL": {
+                        "color": "transparent",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Vehicle Type"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Dwell Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
           }
         ]
       },
@@ -129,7 +210,7 @@
             "type": "influxdb",
             "uid": "xU6Z19aVk"
           },
-          "query": "from(bucket: \"UseCase2\")\n  |> range(start: -15m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"parking_spots\")\n  // 1. Exclude the raw occupied integer field to avoid type collisions\n  |> filter(fn: (r) => r[\"_field\"] != \"occupied\")\n  // 2. Cast values to string to ensure the pivot works perfectly\n  |> toString()\n  // 3. Grab the latest point for each parking spot\n  |> group(columns: [\"zone_id\", \"spot_id\", \"_field\"])\n  |> last()\n  // 4. Pivot fields into table columns\n  |> group(columns: [\"zone_id\", \"spot_id\"])\n  |> pivot(\n      rowKey: [\"zone_id\", \"spot_id\"],\n      columnKey: [\"_field\"],\n      valueColumn: \"_value\"\n  )\n  // 5. Group together and sort sequentially\n  |> group()\n  |> sort(columns: [\"zone_id\", \"spot_id\"])\n  // 6. Output columns in order including our new calculated fields\n  |> keep(columns: [\"zone_id\", \"spot_id\", \"status\", \"type\", \"color\", \"entry_time\", \"dwell_time\", \"fee\"])\n",
+          "query": "from(bucket: \"UseCase2\")\n  |> range(start: -15m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"parking_spots\")\n  |> filter(fn: (r) => r[\"_field\"] != \"occupied\")\n  |> toString()\n  |> group(columns: [\"zone_id\", \"spot_id\", \"_field\"])\n  |> last()\n  |> group(columns: [\"zone_id\", \"spot_id\"])\n  |> pivot(\n      rowKey: [\"zone_id\", \"spot_id\"],\n      columnKey: [\"_field\"],\n      valueColumn: \"_value\"\n  )\n  |> group()\n  |> sort(columns: [\"zone_id\", \"spot_id\"])\n  |> keep(columns: [\"zone_id\", \"spot_id\", \"status\", \"type\", \"color\", \"license_plate\", \"plate_image\", \"lpr_alert\", \"entry_time\", \"dwell_time\", \"fee\"])\n  ",
           "refId": "A"
         }
       ],
@@ -155,6 +236,9 @@
               "dwell_time": "Dwell Time",
               "entry_time": "Entry Time",
               "fee": "Fee",
+              "license_plate": "License Plate",
+              "lpr_alert": "Plate Status",
+              "plate_image": "Actual License Plate Image",
               "spot_id": "Parking Spot ID",
               "status": "Parking Lot Occupy Status",
               "type": "Vehicle Type",
@@ -185,5 +269,5 @@
   "timezone": "browser",
   "title": "Smart Parking Dashboardc2",
   "uid": "eeokpst3k6xogdc",
-  "version": 5
+  "version": 6
 }
