@@ -31,7 +31,6 @@ CLIENT_CERT = os.environ.get('CLIENT_CERT', '/run/secrets/certs/scenescape-broke
 CLIENT_KEY = os.environ.get('CLIENT_KEY', '/run/secrets/certs/scenescape-broker.key')
 DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
 TIMEZONE = "UTC"
-
 COLOR_LABELS = ["black", "silver", "white", "red", "blue", "gray"]
 
 def getMACAddress():
@@ -232,7 +231,7 @@ class PostInferenceDataPublish:
       utils.get_gva_meta_messages(frame, gvametadata)
       gvametadata['gva_meta'] = utils.get_gva_meta_regions(frame)
       self.buildObjData(gvametadata)
-
+      
       # 1. Image Snapshots for SceneScape UI
       if self.is_publish_image:
         self.buildImgData(imgdatadict, frame, True)
@@ -243,52 +242,79 @@ class PostInferenceDataPublish:
           self.buildImgData(imgdatadict, frame, False)
         self.client.publish(f"scenescape/image/calibration/camera/{self.cameraid}", json.dumps(imgdatadict))
         self.is_publish_calibration_image = False
-
+        
       # 2. Publish SceneScape 2D/3D Camera Sensor Payload
       self.client.publish(f"scenescape/data/camera/{self.cameraid}", json.dumps(self.frame_level_data))
-
-      # 3. Format and Normalize Smart Parking Payload
+      
+      # 3. Format, Normalize, and CROP License Plate for Smart Parking Payload
       start_t = getattr(self, 'start_time', time.time())
-      if 'objects' in gvametadata:
-        for obj_idx, obj in enumerate(gvametadata['objects']):
-          parsed_color = "silver"
-          parsed_conf = 13.205
-          parsed_id = 1
-
-          # Normalizing classification dictionary
-          for k, v in list(obj.items()):
-            if k.startswith('classification_layer_name:') and isinstance(v, dict):
-              raw_label = str(v.get('label', ''))
-              if ',' in raw_label:
-                try:
-                  scores = [float(s.strip()) for s in raw_label.split(',')]
-                  pred_idx = int(np.argmax(scores))
-                  parsed_color = COLOR_LABELS[pred_idx] if pred_idx < len(COLOR_LABELS) else 'silver'
-                  parsed_conf = float(scores[pred_idx])
-                  parsed_id = pred_idx
-                except Exception:
-                  pass
-              v['label'] = parsed_color
-              v['confidence'] = parsed_conf
-              v['label_id'] = parsed_id
-
-          # Normalizing gva_meta tensors
-          if 'gva_meta' in gvametadata and obj_idx < len(gvametadata['gva_meta']):
-            gva_entry = gvametadata['gva_meta'][obj_idx]
-            det_tensor = {
-              "name": "detection",
-              "confidence": float(obj.get('detection', {}).get('confidence', 0.927)),
-              "label_id": int(obj.get('detection', {}).get('label_id', 2)),
-              "label": str(obj.get('detection', {}).get('label', 'car'))
-            }
-            cls_tensor = {
-              "name": "classification",
-              "confidence": parsed_conf,
-              "label_id": parsed_id,
-              "label": parsed_color
-            }
-            gva_entry['tensor'] = [det_tensor, cls_tensor]
-
+      
+      # We extract the numpy image buffer only if objects (plates) exist to save CPU
+      if 'objects' in gvametadata and len(gvametadata['objects']) > 0:
+        with frame.data() as raw_image:
+          # Check frame bounds safely
+          img_h, img_w = raw_image.shape[:2]
+          
+          for obj_idx, obj in enumerate(gvametadata['objects']):
+            # --- START CROPPING LOGIC ---
+            roi_type = obj.get("roi_type", "")
+            if roi_type in ["English", "license_plate", "number_plate"]:
+              # Map coordinates accurately
+              x_val = max(0, int(obj.get("x", 0)))
+              y_val = max(0, int(obj.get("y", 0)))
+              w_val = int(obj.get("w", 0))
+              h_val = int(obj.get("h", 0))
+              
+              x_end = min(img_w, x_val + w_val)
+              y_end = min(img_h, y_val + h_val)
+              
+              if x_end > x_val and y_end > y_val:
+                crop_area = raw_image[y_val:y_end, x_val:x_end]
+                # Compress as JPEG at 80% quality to minimize InfluxDB payload
+                success, compressed_jpeg = cv2.imencode(".jpg", crop_area, [int(cv2.IMWRITE_JPEG_QUALITY), 80])
+                if success:
+                  plate_b64 = "data:image/jpeg;base64," + base64.b64encode(compressed_jpeg).decode('utf-8')
+                  # Embed the image right into the object structure
+                  obj["plate_image"] = plate_b64
+            # --- END CROPPING LOGIC ---
+            
+            parsed_color = "silver"
+            parsed_conf = 13.205
+            parsed_id = 1
+            # Normalizing classification dictionary
+            for k, v in list(obj.items()):
+              if k.startswith('classification_layer_name:') and isinstance(v, dict):
+                raw_label = str(v.get('label', ''))
+                if ',' in raw_label:
+                  try:
+                    scores = [float(s.strip()) for s in raw_label.split(',')]
+                    pred_idx = int(np.argmax(scores))
+                    parsed_color = COLOR_LABELS[pred_idx] if pred_idx < len(COLOR_LABELS) else 'silver'
+                    parsed_conf = float(scores[pred_idx])
+                    parsed_id = pred_idx
+                  except Exception:
+                    pass
+                v['label'] = parsed_color
+                v['confidence'] = parsed_conf
+                v['label_id'] = parsed_id
+            
+            # Normalizing gva_meta tensors
+            if 'gva_meta' in gvametadata and obj_idx < len(gvametadata['gva_meta']):
+              gva_entry = gvametadata['gva_meta'][obj_idx]
+              det_tensor = {
+                "name": "detection",
+                "confidence": float(obj.get('detection', {}).get('confidence', 0.927)),
+                "label_id": int(obj.get('detection', {}).get('label_id', 2)),
+                "label": str(obj.get('detection', {}).get('label', 'car'))
+              }
+              cls_tensor = {
+                "name": "classification",
+                "confidence": parsed_conf,
+                "label_id": parsed_id,
+                "label": parsed_color
+              }
+              gva_entry['tensor'] = [det_tensor, cls_tensor]
+              
       gvametadata['frame_id'] = self.frame_count
       gvametadata['time'] = now_ns
       gvametadata['pipeline'] = {

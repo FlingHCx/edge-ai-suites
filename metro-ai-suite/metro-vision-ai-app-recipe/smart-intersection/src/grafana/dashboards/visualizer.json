@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -118,7 +118,14 @@
               "id": "byName",
               "options": "Actual License Plate Image"
             },
-            "properties": []
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "image"
+                }
+              }
+            ]
           },
           {
             "matcher": {
@@ -269,5 +276,5 @@
   "timezone": "browser",
   "title": "Smart Parking Dashboardc2",
   "uid": "eeokpst3k6xogdc",
-  "version": 6
+  "version": 1
 }
