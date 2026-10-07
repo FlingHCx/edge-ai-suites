@@ -620,7 +620,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 170,
-        "y": 740,
+        "y": 800,
         "wires": [
             [
                 "76d2bd76a4ef7e5c"
@@ -634,7 +634,7 @@
         "name": "MQTT client live",
         "info": "",
         "x": 160,
-        "y": 680,
+        "y": 740,
         "wires": []
     },
     {
@@ -690,7 +690,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 170,
-        "y": 860,
+        "y": 920,
         "wires": [
             [
                 "95960527888e5033"
@@ -711,7 +711,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 170,
-        "y": 980,
+        "y": 1040,
         "wires": [
             [
                 "e9ec4b4453fa1b79"
@@ -732,7 +732,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 170,
-        "y": 1100,
+        "y": 1160,
         "wires": [
             [
                 "bf3853d70ff6b4b4"
@@ -1004,7 +1004,7 @@
         "type": "multi streams",
         "z": "2565308851e08a7a",
         "name": "multi streams 1",
-        "func": "var object_detection_list = [\n    flow.get('object_detection_1'),\n    flow.get('object_detection_2'),\n    flow.get('object_detection_3'),\n    flow.get('object_detection_4')\n];\n\nvar result = { \"payload\": {} };\nvar region_index = 0;\n\nfor (let i = 0; i < object_detection_list.length; i++) {\n    // Skip streams that are not running or haven't emitted yet\n    if (!object_detection_list[i] || !object_detection_list[i].payload) {\n        continue;\n    }\n\n    var streamPayload = object_detection_list[i].payload;\n    if (typeof streamPayload === 'string') {\n        try {\n            streamPayload = JSON.parse(streamPayload);\n        } catch (e) {\n            continue;\n        }\n    }\n\n    var keys = Object.keys(streamPayload);\n    for (let j = 0; j < keys.length; j++) {\n        var keyName = keys[j];\n        if (keyName !== \"_msgid\") {\n            result.payload[\"Region \" + (region_index + 1)] = streamPayload[keyName];\n            region_index++;\n        }\n    }\n}\n\n// Only emit if at least one stream produced data\nif (Object.keys(result.payload).length > 0) {\n    return result;\n}\nreturn null;\n",
+        "func": "// Function: multi streams 1 (Per-Floor Single-Car Overlap Detector)\n\nvar object_detection_list = [\n    flow.get('object_detection_1'),\n    flow.get('object_detection_2'),\n    flow.get('object_detection_3'),\n    flow.get('object_detection_4')\n];\n\nvar combinedPayload = { \"payload\": {} };\nlet irregularSpotsMap = {};\nvar region_index = 0;\n\nfor (let i = 0; i < object_detection_list.length; i++) {\n    if (!object_detection_list[i] || !object_detection_list[i].payload) {\n        continue;\n    }\n\n    var streamPayload = object_detection_list[i].payload;\n    if (typeof streamPayload === 'string') {\n        try {\n            streamPayload = JSON.parse(streamPayload);\n        } catch (e) {\n            continue;\n        }\n    }\n\n    let occupiedInThisFloor = [];\n    var keys = Object.keys(streamPayload);\n\n    // 1. Gather spots for this camera/floor\n    for (let j = 0; j < keys.length; j++) {\n        var keyName = keys[j];\n        if (keyName !== \"_msgid\") {\n            var spot = streamPayload[keyName];\n\n            var displayRegionName = \"Region \" + (region_index + 1);\n            combinedPayload.payload[displayRegionName] = spot;\n            region_index++;\n\n            // CRITICAL FIX: ONLY check spot.occupied > 0!\n            // Do NOT check spot.type because empty spots still retain [\"car\"] in their template array.\n            var isSpotOccupied = spot && Number(spot.occupied) > 0;\n\n            if (isSpotOccupied) {\n                occupiedInThisFloor.push({\n                    zoneId: String(spot.video_id || (i + 1)),\n                    spotId: String(spot.region_id || \"\")\n                });\n            }\n        }\n    }\n\n    // 2. Single-Car Rule: If 2 or more spots on the SAME floor have occupied > 0,\n    // then that single car is straddling multiple spots!\n    if (occupiedInThisFloor.length >= 2) {\n        occupiedInThisFloor.forEach(item => {\n            var uniqueKey = \"z\" + item.zoneId + \"_s\" + item.spotId;\n            irregularSpotsMap[uniqueKey] = \"DOUBLE_PARKED\";\n        });\n    }\n}\n\nif (Object.keys(combinedPayload.payload).length === 0) {\n    return null;\n}\n\n// Persist the floor-isolated irregular spots map\nflow.set(\"irregular_parking_spots\", irregularSpotsMap);\n\nreturn combinedPayload;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1012,7 +1012,7 @@
         "finalize": "",
         "libs": [],
         "x": 940,
-        "y": 900,
+        "y": 960,
         "wires": [
             [
                 "f6ae97c911a47414"
@@ -1089,7 +1089,7 @@
         "finalize": "",
         "libs": [],
         "x": 420,
-        "y": 740,
+        "y": 800,
         "wires": [
             [
                 "2d56b7bf3453a559"
@@ -1109,7 +1109,7 @@
         "finalize": "",
         "libs": [],
         "x": 410,
-        "y": 860,
+        "y": 920,
         "wires": [
             [
                 "e14c5628ddc14be7"
@@ -1129,7 +1129,7 @@
         "finalize": "",
         "libs": [],
         "x": 410,
-        "y": 980,
+        "y": 1040,
         "wires": [
             [
                 "10c1f488587e191f"
@@ -1149,7 +1149,7 @@
         "finalize": "",
         "libs": [],
         "x": 410,
-        "y": 1100,
+        "y": 1160,
         "wires": [
             [
                 "9f56af684765e1b8"
@@ -1192,7 +1192,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 1380,
-        "y": 900,
+        "y": 960,
         "wires": [
             [
                 "7f1a1373af3b3a3d"
@@ -1212,7 +1212,7 @@
         "finalize": "",
         "libs": [],
         "x": 670,
-        "y": 740,
+        "y": 800,
         "wires": [
             [
                 "e177c92041e080d6"
@@ -1232,7 +1232,7 @@
         "finalize": "",
         "libs": [],
         "x": 670,
-        "y": 860,
+        "y": 920,
         "wires": [
             [
                 "e177c92041e080d6"
@@ -1252,7 +1252,7 @@
         "finalize": "",
         "libs": [],
         "x": 670,
-        "y": 980,
+        "y": 1040,
         "wires": [
             [
                 "e177c92041e080d6"
@@ -1272,7 +1272,7 @@
         "finalize": "",
         "libs": [],
         "x": 670,
-        "y": 1100,
+        "y": 1160,
         "wires": [
             [
                 "e177c92041e080d6"
@@ -1292,7 +1292,7 @@
         "finalize": "",
         "libs": [],
         "x": 1170,
-        "y": 900,
+        "y": 960,
         "wires": [
             [
                 "194bef5b8926da08"
@@ -1304,15 +1304,15 @@
         "type": "function",
         "z": "2565308851e08a7a",
         "name": "function 2",
-        "func": "const rawPayload = msg.payload;\nconst points = [];\n\nfunction parseDwellSeconds(timeStr) {\n    if (!timeStr || timeStr === \"-\" || typeof timeStr !== \"string\") return 0;\n    const parts = timeStr.split(\":\").map(Number);\n    if (parts.length === 3) {\n        return (parts[0] * 3600) + (parts[1] * 60) + parts[2];\n    }\n    return 0;\n}\n\nfor (const [regionName, spot] of Object.entries(rawPayload)) {\n    const rawOccupied = spot[\"Status\"] === \"Occupied\";\n    const dwellSeconds = parseDwellSeconds(spot[\"Dwell Time\"]);\n\n    // 1. Dwell condition (>2 seconds)\n    const isTrulyOccupied = rawOccupied && dwellSeconds > 2;\n\n    // 2. Billing fee tier calculation\n    let feeString = \"$0\";\n    if (isTrulyOccupied) {\n        feeString = dwellSeconds > 5 ? \"$2\" : \"$1\";\n    }\n\n    // 3. License plate & OCR detection check\n    const hasPlate = spot[\"License Plate\"] && spot[\"License Plate\"] !== \"-\" && spot[\"License Plate\"] !== \"\";\n    const plateText = isTrulyOccupied && hasPlate ? spot[\"License Plate\"] : \"-\";\n    const plateImage = isTrulyOccupied && hasPlate && spot[\"Plate Image\"] ? spot[\"Plate Image\"] : \"-\";\n\n    // 4. Missing Plate Alarm Logic:\n    // If spot is occupied but plate could not be read -> trigger ALERT\n    let lprAlert = \"NORMAL\";\n    if (isTrulyOccupied && !hasPlate) {\n        lprAlert = \"MISSING_PLATE\";\n    }\n\n    const tags = {\n        region: regionName,\n        zone_id: String(spot[\"Zone ID\"] || \"\"),\n        spot_id: String(spot[\"Spot ID\"] || \"\")\n    };\n\n    const fields = {\n        occupied: isTrulyOccupied ? 1 : 0,\n        status: isTrulyOccupied ? \"Occupied\" : \"Empty\",\n        type: isTrulyOccupied && spot[\"Type\"] ? spot[\"Type\"] : \"-\",\n        color: isTrulyOccupied && spot[\"Color\"] ? spot[\"Color\"] : \"-\",\n        license_plate: plateText,\n        plate_image: plateImage, // Writes the Base64 data URI string directly to InfluxDB\n        lpr_alert: lprAlert,\n        entry_time: isTrulyOccupied && spot[\"Entry Time\"] ? spot[\"Entry Time\"] : \"-\",\n        dwell_time: isTrulyOccupied && spot[\"Dwell Time\"] ? spot[\"Dwell Time\"] : \"-\",\n        fee: feeString\n    };\n\n    points.push([\n        fields,\n        tags\n    ]);\n}\n\nmsg.measurement = \"parking_spots\";\nmsg.payload = points;\n\nreturn msg;\n",
+        "func": "// Function: function 2 (InfluxDB Line Formatter)\n\nconst rawPayload = msg.payload;\nconst points = [];\n\n// Retrieve the active irregular parking spots evaluated in multi streams 1\nconst irregularSpots = flow.get(\"irregular_parking_spots\") || {};\n\nfunction parseDwellSeconds(timeStr) {\n    if (!timeStr || timeStr === \"-\" || typeof timeStr !== \"string\") return 0;\n    const parts = timeStr.split(\":\").map(Number);\n    if (parts.length === 3) {\n        return (parts[0] * 3600) + (parts[1] * 60) + parts[2];\n    }\n    return 0;\n}\n\nfor (const [regionName, spot] of Object.entries(rawPayload)) {\n    const rawOccupied = spot[\"Status\"] === \"Occupied\";\n    const dwellSeconds = parseDwellSeconds(spot[\"Dwell Time\"]);\n    const isTrulyOccupied = rawOccupied && dwellSeconds > 2;\n\n    // 1. Fee calculation\n    let feeString = \"$0\";\n    if (isTrulyOccupied) {\n        feeString = dwellSeconds > 5 ? \"$2\" : \"$1\";\n    }\n\n    // 2. License plate checking\n    const hasPlate = spot[\"License Plate\"] && spot[\"License Plate\"] !== \"-\" && spot[\"License Plate\"] !== \"\";\n    const plateText = isTrulyOccupied && hasPlate ? spot[\"License Plate\"] : \"-\";\n    const plateImage = isTrulyOccupied && hasPlate && spot[\"Plate Image\"] ? spot[\"Plate Image\"] : \"-\";\n\n    // 3. LPR Alert\n    let lprAlert = \"NORMAL\";\n    if (isTrulyOccupied && !hasPlate) {\n        lprAlert = \"NO PLATE ALARM\";\n    }\n\n    // 4. Irregular Parking Alarm\n    let parkingAlarm = \"NORMAL\";\n    const zoneId = String(spot[\"Zone ID\"] || \"\");\n    const spotId = String(spot[\"Spot ID\"] || \"\");\n    const uniqueKey = \"z\" + zoneId + \"_s\" + spotId;\n\n    // Only flag DOUBLE_PARKED if the spot is ACTUALLY occupied AND multiple spots are occupied on this floor\n    if (isTrulyOccupied && irregularSpots[uniqueKey] === \"DOUBLE_PARKED\") {\n        parkingAlarm = \"DOUBLE_PARKED\";\n    }\n\n    const tags = {\n        region: regionName,\n        zone_id: zoneId,\n        spot_id: spotId\n    };\n\n    const fields = {\n        occupied: isTrulyOccupied ? 1 : 0,\n        status: isTrulyOccupied ? \"Occupied\" : \"Empty\",\n        type: isTrulyOccupied && spot[\"Type\"] ? spot[\"Type\"] : \"-\",\n        color: isTrulyOccupied && spot[\"Color\"] ? spot[\"Color\"] : \"-\",\n        license_plate: plateText,\n        plate_image: plateImage,\n        lpr_alert: lprAlert,\n        parking_alarm: parkingAlarm,\n        entry_time: isTrulyOccupied && spot[\"Entry Time\"] ? spot[\"Entry Time\"] : \"-\",\n        dwell_time: isTrulyOccupied && spot[\"Dwell Time\"] ? spot[\"Dwell Time\"] : \"-\",\n        fee: feeString\n    };\n\n    points.push([\n        fields,\n        tags\n    ]);\n}\n\nmsg.measurement = \"parking_spots\";\nmsg.payload = points;\n\nreturn msg;\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1220,
-        "y": 760,
+        "x": 1540,
+        "y": 960,
         "wires": [
             [
                 "51f35a3e344a22e3"
@@ -1333,12 +1333,12 @@
         "retentionPolicyV18Flux": "",
         "org": "ITM",
         "bucket": "UseCase2",
-        "x": 1420,
-        "y": 700,
+        "x": 1680,
+        "y": 960,
         "wires": []
     },
     {
-        "id": "e89910ce2186068f",
+        "id": "9be807b6eeeef44d",
         "type": "debug",
         "z": "2565308851e08a7a",
         "name": "debug 1",
@@ -1349,8 +1349,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1480,
-        "y": 520,
+        "x": 1640,
+        "y": 780,
         "wires": []
     },
     {
@@ -1401,7 +1401,7 @@
         "rejectUnauthorized": false
     },
     {
-        "id": "41b5be5ebf322164",
+        "id": "91adb6e4484694f1",
         "type": "global-config",
         "env": [],
         "modules": {

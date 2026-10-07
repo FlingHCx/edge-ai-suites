@@ -56,18 +56,6 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "spot_id"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 150
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
               "options": "zone_id"
             },
             "properties": [
@@ -149,10 +137,9 @@
                 "value": [
                   {
                     "options": {
-                      "MISSING_PLATE": {
+                      "NO PLATE ALARM": {
                         "color": "red",
-                        "index": 1,
-                        "text": "NO PLATE ALARM"
+                        "index": 1
                       },
                       "NORMAL": {
                         "color": "transparent",
@@ -188,11 +175,47 @@
                 "value": 150
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Parking Alarm"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "auto"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "DOUBLE_PARKED": {
+                        "color": "red",
+                        "index": 1
+                      },
+                      "NORMAL": {
+                        "color": "transparent",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
       "gridPos": {
-        "h": 22,
+        "h": 24,
         "w": 24,
         "x": 0,
         "y": 0
@@ -217,7 +240,7 @@
             "type": "influxdb",
             "uid": "xU6Z19aVk"
           },
-          "query": "from(bucket: \"UseCase2\")\n  |> range(start: -15m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"parking_spots\")\n  |> filter(fn: (r) => r[\"_field\"] != \"occupied\")\n  |> toString()\n  |> group(columns: [\"zone_id\", \"spot_id\", \"_field\"])\n  |> last()\n  |> group(columns: [\"zone_id\", \"spot_id\"])\n  |> pivot(\n      rowKey: [\"zone_id\", \"spot_id\"],\n      columnKey: [\"_field\"],\n      valueColumn: \"_value\"\n  )\n  |> group()\n  |> sort(columns: [\"zone_id\", \"spot_id\"])\n  |> keep(columns: [\"zone_id\", \"spot_id\", \"status\", \"type\", \"color\", \"license_plate\", \"plate_image\", \"lpr_alert\", \"entry_time\", \"dwell_time\", \"fee\"])\n  ",
+          "query": "from(bucket: \"UseCase2\")\n  |> range(start: -2m)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"parking_spots\")\n  |> filter(fn: (r) => r[\"_field\"] != \"occupied\")\n  |> last()\n  |> pivot(\n      rowKey: [\"zone_id\", \"spot_id\"],\n      columnKey: [\"_field\"],\n      valueColumn: \"_value\"\n  )\n  |> group()\n  |> sort(columns: [\"zone_id\", \"spot_id\"])\n  |> keep(columns: [\"zone_id\", \"spot_id\", \"status\", \"type\", \"color\", \"license_plate\", \"plate_image\", \"lpr_alert\", \"parking_alarm\", \"entry_time\", \"dwell_time\", \"fee\"])\n",
           "refId": "A"
         }
       ],
@@ -245,6 +268,7 @@
               "fee": "Fee",
               "license_plate": "License Plate",
               "lpr_alert": "Plate Status",
+              "parking_alarm": "Parking Alarm",
               "plate_image": "Actual License Plate Image",
               "spot_id": "Parking Spot ID",
               "status": "Parking Lot Occupy Status",
@@ -276,5 +300,5 @@
   "timezone": "browser",
   "title": "Smart Parking Dashboardc2",
   "uid": "eeokpst3k6xogdc",
-  "version": 1
+  "version": 4
 }
