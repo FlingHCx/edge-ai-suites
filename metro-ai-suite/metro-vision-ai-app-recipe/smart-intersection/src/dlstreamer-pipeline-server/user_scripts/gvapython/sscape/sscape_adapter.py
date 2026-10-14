@@ -19,6 +19,7 @@ import time
 from collections import defaultdict
 from datetime import datetime
 from uuid import getnode as get_mac
+
 import cv2
 import ntplib
 import numpy as np
@@ -32,6 +33,8 @@ CLIENT_KEY = os.environ.get('CLIENT_KEY', '/run/secrets/certs/scenescape-broker.
 DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
 TIMEZONE = "UTC"
 COLOR_LABELS = ["black", "silver", "white", "red", "blue", "gray"]
+TRACKABLE_VEHICLE_CLASSES = {"car", "vehicle", "truck", "bus", "van", "automobile"}
+
 
 def getMACAddress():
   if 'MACADDR' in os.environ:
@@ -39,6 +42,7 @@ def getMACAddress():
   a = get_mac()
   h = iter(hex(a)[2:].zfill(12))
   return ":".join(i + next(h) for i in h)
+
 
 class PostDecodeTimestampCapture:
   def __init__(self, ntpServer=None):
@@ -65,14 +69,16 @@ class PostDecodeTimestampCapture:
       self.fps = self.fps * self.fps_alpha + (1 - self.fps_alpha) * (self.frame_cnt / (now - self.last_calculated_fps_ts))
       self.last_calculated_fps_ts = now
       self.frame_cnt = 0
+
     if self.ntpServer:
-      if not self.lastTimeSync or now - self.lastTimeSync > 1000 :
+      if not self.lastTimeSync or now - self.lastTimeSync > 1000:
         try:
           response = self.ntpClient.request(host=self.ntpServer, port=123)
           self.timeOffset = response.offset
           self.lastTimeSync = now
         except Exception:
           pass
+
     now += self.timeOffset
     self.timestamp_for_next_block = now
     frame.add_message(json.dumps({
@@ -81,6 +87,7 @@ class PostDecodeTimestampCapture:
       'fps': self.fps
     }))
     return True
+
 
 def computeObjBoundingBoxParams(pobj, fw, fh, x, y, w, h, xminnorm=None, yminnorm=None, xmaxnorm=None, ymaxnorm=None):
   xmax, xmin = int(xmaxnorm * fw), int(xminnorm * fw)
@@ -91,6 +98,7 @@ def computeObjBoundingBoxParams(pobj, fw, fh, x, y, w, h, xminnorm=None, yminnor
     'bounding_box_px': {'x': x, 'y': y, 'width': w, 'height': h}
   })
   return
+
 
 def detectionPolicy(pobj, item, fw, fh):
   pobj.update({
@@ -104,12 +112,14 @@ def detectionPolicy(pobj, item, fw, fh):
                               item['detection']['bounding_box']['y_max'])
   return
 
+
 def reidPolicy(pobj, item, fw, fh):
   detectionPolicy(pobj, item, fw, fh)
   reid_vector = item['tensors'][1]['data']
   v = struct.pack("256f", *reid_vector)
   pobj['reid'] = base64.b64encode(v).decode('utf-8')
   return
+
 
 def classificationPolicy(pobj, item, fw, fh):
   detectionPolicy(pobj, item, fw, fh)
@@ -119,11 +129,13 @@ def classificationPolicy(pobj, item, fw, fh):
       break
   return
 
+
 metadatapolicies = {
   "detectionPolicy": detectionPolicy,
   "reidPolicy": reidPolicy,
   "classificationPolicy": classificationPolicy
 }
+
 
 class PostInferenceDataPublish:
   def __init__(self, cameraid, metadatagenpolicy='detectionPolicy', publish_image=False):
@@ -131,11 +143,11 @@ class PostInferenceDataPublish:
     self.is_publish_image = publish_image
     self.is_publish_calibration_image = False
     self.start_time = time.time()
-    
+
     # Topic derivation: parkingcam1_gpu -> object_detection_1
     cam_num = ''.join(filter(str.isdigit, self.cameraid)) or '1'
     self.sp_topic = f"object_detection_{cam_num}"
-    
+
     self.setupMQTT()
     self.metadatagenpolicy = metadatapolicies.get(metadatagenpolicy, detectionPolicy)
     self.frame_level_data = {'id': cameraid, 'debug_mac': getMACAddress()}
@@ -214,11 +226,22 @@ class PostInferenceDataPublish:
       framewidth = gvadata.get('resolution', {}).get('width', 1920)
       frameheight = gvadata.get('resolution', {}).get('height', 1080)
       for det in gvadata['objects']:
+        # Extract label from detection dictionary or fallback to roi_type
+        label = det.get('detection', {}).get('label', det.get('roi_type', ''))
+
+        # Only publish vehicle classes to SceneScape's 2D/3D tracking stream
+        # This prevents license plates / English OCR regions from creating duplicate ghost trails
+        if label.lower() not in TRACKABLE_VEHICLE_CLASSES:
+          continue
+
         vaobj = {}
         self.metadatagenpolicy(vaobj, det, framewidth, frameheight)
-        otype = vaobj['category']
-        vaobj['id'] = len(objects[otype]) + 1
+        otype = vaobj.get('category', label)
+
+        # Preserve upstream ID if available, otherwise fallback to index count
+        vaobj['id'] = det.get('id', len(objects[otype]) + 1)
         objects[otype].append(vaobj)
+
     self.frame_level_data['objects'] = objects
 
   def processFrame(self, frame):
@@ -226,12 +249,12 @@ class PostInferenceDataPublish:
       self.frame_count += 1
       now_ns = time.time_ns()
       gvametadata, imgdatadict = {}, {}
-      
+
       # Fast C++ metadata extraction
       utils.get_gva_meta_messages(frame, gvametadata)
       gvametadata['gva_meta'] = utils.get_gva_meta_regions(frame)
       self.buildObjData(gvametadata)
-      
+
       # 1. Image Snapshots for SceneScape UI
       if self.is_publish_image:
         self.buildImgData(imgdatadict, frame, True)
@@ -242,30 +265,29 @@ class PostInferenceDataPublish:
           self.buildImgData(imgdatadict, frame, False)
         self.client.publish(f"scenescape/image/calibration/camera/{self.cameraid}", json.dumps(imgdatadict))
         self.is_publish_calibration_image = False
-        
-      # 2. Publish SceneScape 2D/3D Camera Sensor Payload
+
+      # 2. Publish SceneScape 2D/3D Camera Sensor Payload (Filtered: Vehicles ONLY)
       self.client.publish(f"scenescape/data/camera/{self.cameraid}", json.dumps(self.frame_level_data))
-      
-            # 3. Format, Normalize, and CROP License Plate for Smart Parking Payload
+
+      # 3. Format, Normalize, and CROP License Plate for Smart Parking Payload
       start_t = getattr(self, 'start_time', time.time())
-      
+
       if 'objects' in gvametadata and len(gvametadata['objects']) > 0:
         with frame.data() as raw_image:
           img_h, img_w = raw_image.shape[:2]
-          
+
           for obj_idx, obj in enumerate(gvametadata['objects']):
             roi_type = obj.get("roi_type", "")
-
             # --- START CROPPING LOGIC ---
             if roi_type in ["English", "license_plate", "number_plate"]:
               x_val = max(0, int(obj.get("x", 0)))
               y_val = max(0, int(obj.get("y", 0)))
               w_val = int(obj.get("w", 0))
               h_val = int(obj.get("h", 0))
-              
+
               x_end = min(img_w, x_val + w_val)
               y_end = min(img_h, y_val + h_val)
-              
+
               if x_end > x_val and y_end > y_val:
                 crop_area = raw_image[y_val:y_end, x_val:x_end]
                 success, compressed_jpeg = cv2.imencode(".jpg", crop_area, [int(cv2.IMWRITE_JPEG_QUALITY), 80])
@@ -279,7 +301,6 @@ class PostInferenceDataPublish:
               parsed_color = "silver"
               parsed_conf = 13.205
               parsed_id = 1
-
               for k, v in list(obj.items()):
                 if k.startswith('classification_layer_name:') and isinstance(v, dict):
                   raw_label = str(v.get('label', ''))
@@ -295,7 +316,7 @@ class PostInferenceDataPublish:
                   v['label'] = parsed_color
                   v['confidence'] = parsed_conf
                   v['label_id'] = parsed_id
-            
+
               # Normalizing gva_meta tensors for vehicle
               if 'gva_meta' in gvametadata and obj_idx < len(gvametadata['gva_meta']):
                 gva_entry = gvametadata['gva_meta'][obj_idx]
@@ -312,7 +333,7 @@ class PostInferenceDataPublish:
                   "label": parsed_color
                 }
                 gva_entry['tensor'] = [det_tensor, cls_tensor]
-              
+
       gvametadata['frame_id'] = self.frame_count
       gvametadata['time'] = now_ns
       gvametadata['pipeline'] = {
@@ -330,7 +351,7 @@ class PostInferenceDataPublish:
           'state': 'RUNNING'
         }
       }
-      
+
       self.client.publish(self.sp_topic, json.dumps({'metadata': gvametadata, 'blob': ''}))
       frame.add_message(json.dumps(self.frame_level_data))
     return True
